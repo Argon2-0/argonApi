@@ -1,0 +1,63 @@
+package vision2cloud.argon.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import vision2cloud.argon.model.Herramienta;
+import vision2cloud.argon.model.HerramientaParticipante;
+import vision2cloud.argon.persistence.Impl.HerramientaImpl;
+import vision2cloud.argon.persistence.Impl.HerramientaParticipanteImpl;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+@Service("HerramientaParticipanteService")
+public class HerramientaParticipanteService {
+    @Autowired
+    @Qualifier("HerramientaParticipanteImpl")
+    HerramientaParticipanteImpl herramientaParticipanteImpl;
+
+    @Autowired
+    @Qualifier("HerramientaImpl")
+    HerramientaImpl herramientaImpl;
+
+    public Object create(HerramientaParticipante herramientaParticipante) {
+        return herramientaParticipanteImpl.create(herramientaParticipante);
+    }
+
+    public List<HerramientaParticipante> getHerramientasParticipantes() {
+        return herramientaParticipanteImpl.getHerramientasParticipantes();
+    }
+
+    public HerramientaParticipante getHerramientaParticipanteById(long id) {
+        return herramientaParticipanteImpl.getHerramientaParticipanteById(id);
+    }
+
+    public List<HerramientaParticipante> getHerramientaParticipanteToday() {
+        return herramientaParticipanteImpl.getHerramientaParticipanteToday();
+    }
+
+    public Object update(HerramientaParticipante herramientaParticipante) {
+        return herramientaParticipanteImpl.update(herramientaParticipante);
+    }
+
+    public HerramientaParticipante findByHerramientaIdAndEstado(Long herramienta_id, String estado) {
+        return herramientaParticipanteImpl.findByHerramientaIdAndEstado(herramienta_id, estado);
+    }
+
+    public List<HerramientaParticipante> findByEstado(String estado) {
+        return herramientaParticipanteImpl.findByEstado(estado);
+    }
+
+    public List<HerramientaParticipante> findByCreatedAtBetweenAndMarca(Timestamp start, Timestamp end, String marca) {
+        if(marca.equals("")){
+            return herramientaParticipanteImpl.getHerramientaCreatedAtBetween(start, end);
+        }
+        List<Herramienta> herramientasByMarca = herramientaImpl.findByMarca(marca);
+        return herramientaParticipanteImpl.findByCreatedAtBetweenAndMarca(start,end,herramientasByMarca);
+    }
+
+    public List<Object> getDataForDashboard(Timestamp start, Timestamp end) {
+        return herramientaParticipanteImpl.getDataForDashboard(start,end);
+    }
+}
