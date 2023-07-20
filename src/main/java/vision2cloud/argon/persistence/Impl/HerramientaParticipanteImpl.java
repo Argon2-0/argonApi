@@ -108,4 +108,9 @@ public class HerramientaParticipanteImpl implements HerramientaParticipantePersi
         return response;
     }
 
+    @Override
+    public int findByParticipanteIdAndEstado(long participante, String estado) {
+        return herramientaParticipanteRepository.findByParticipanteIdAndEstado(participante, estado).size();
+    }
+
 }

@@ -12,7 +12,7 @@ public interface ParticipantePersistence {
     Object create(Participante participante);
     List<Participante> getParticipantes();
     Participante getParticipanteById(long id);
-    Participante findByCedulaLike(long cedula);
+    Participante findByTipoDocumentoAndCedulaLike(String tipoDocumento,long cedula);
     List<Participante> getParticipanteBetween(Timestamp start, Timestamp end);
     List<Object> countByTiposervicioAndCreatedAtBetween(Timestamp start, Timestamp end, List<TipoServicio> tipoServicios);
 

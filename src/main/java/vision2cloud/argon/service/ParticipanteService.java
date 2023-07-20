@@ -23,20 +23,28 @@ public class ParticipanteService {
     TipoServicioImpl tipoServicioImpl;
 
     public Object create(Participante participante) {
-        return participanteImpl.create(participante);
+        try{
+            Participante participante1 = findByTipoDocumentoAndCedulaLike(participante.gettipoDocumento(), participante.getCedula());
+            participante.setId(participante1.getId());
+            return participanteImpl.update(participante);
+        }catch (Exception e){
+            return participanteImpl.create(participante);
+        }
     }
     public List<Participante> getParticipantes() {
         return participanteImpl.getParticipantes();
     }
-    public Participante findByCedulaLike(Long cedula) {
-        return participanteImpl.findByCedulaLike(cedula);
+    public Participante findByTipoDocumentoAndCedulaLike(String tipoDocumento,long cedula) {
+        System.out.println(participanteImpl.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula).getfechaNacimiento());
+        System.out.println(participanteImpl.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula).getCreatedAt());
+        return participanteImpl.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula);
     }
     public Participante getParticipanteById(long id) {
         return participanteImpl.getParticipanteById(id);
     }
 
     public List<Participante> getParticipanteToday() {
-        LocalDate ld = LocalDate.now().minusYears(1);
+        LocalDate ld = LocalDate.now().minusYears(1).minusMonths(2);
         Timestamp start = Timestamp.valueOf(ld.atStartOfDay());
         Timestamp end = Timestamp.valueOf(ld.plusDays(1).atStartOfDay());
         return participanteImpl.getParticipanteBetween(start, end);

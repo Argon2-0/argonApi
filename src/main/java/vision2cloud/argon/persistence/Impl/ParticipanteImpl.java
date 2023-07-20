@@ -37,8 +37,8 @@ public class ParticipanteImpl implements ParticipantePersistence {
     }
 
     @Override
-    public Participante findByCedulaLike(long cedula) {
-        return participanteRepository.findByCedulaLike(cedula);
+    public Participante findByTipoDocumentoAndCedulaLike(String tipoDocumento,long cedula) {
+        return participanteRepository.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class ParticipanteImpl implements ParticipantePersistence {
         actualParticipante.setCurso(participante.getCurso());
         actualParticipante.settratDatos(participante.gettratDatos());
         actualParticipante.setEstado(participante.getEstado());
-        actualParticipante.setupdatedAt(participante.getupdatedAt());
+        actualParticipante.setupdatedAt(participante.getCreatedAt());
         return participanteRepository.save(actualParticipante);
     }
 }

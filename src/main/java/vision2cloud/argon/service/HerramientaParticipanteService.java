@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import vision2cloud.argon.model.Herramienta;
 import vision2cloud.argon.model.HerramientaParticipante;
+import vision2cloud.argon.model.Participante;
 import vision2cloud.argon.persistence.Impl.HerramientaImpl;
 import vision2cloud.argon.persistence.Impl.HerramientaParticipanteImpl;
+import vision2cloud.argon.persistence.Impl.ParticipanteImpl;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -20,7 +22,9 @@ public class HerramientaParticipanteService {
     @Autowired
     @Qualifier("HerramientaImpl")
     HerramientaImpl herramientaImpl;
-
+    @Autowired
+    @Qualifier("ParticipanteImpl")
+    ParticipanteImpl participanteImpl;
     public Object create(HerramientaParticipante herramientaParticipante) {
         return herramientaParticipanteImpl.create(herramientaParticipante);
     }
@@ -38,6 +42,7 @@ public class HerramientaParticipanteService {
     }
 
     public Object update(HerramientaParticipante herramientaParticipante) {
+
         return herramientaParticipanteImpl.update(herramientaParticipante);
     }
 
@@ -59,5 +64,10 @@ public class HerramientaParticipanteService {
 
     public List<Object> getDataForDashboard(Timestamp start, Timestamp end) {
         return herramientaParticipanteImpl.getDataForDashboard(start,end);
+    }
+
+    public int findByParticipanteIdAndEstado(String tipoDocumento, long documento, String estado){
+        Participante participante = participanteImpl.findByTipoDocumentoAndCedulaLike(tipoDocumento, documento);
+        return herramientaParticipanteImpl.findByParticipanteIdAndEstado(participante.getId(), estado);
     }
 }

@@ -29,4 +29,6 @@ public interface HerramientaParticipantePersistence {
     List<HerramientaParticipante> getHerramientaCreatedAtBetween(Timestamp start, Timestamp end);
 
     List<Object> getDataForDashboard(Timestamp start, Timestamp end);
+
+    int findByParticipanteIdAndEstado(long participante, String estado);
 }

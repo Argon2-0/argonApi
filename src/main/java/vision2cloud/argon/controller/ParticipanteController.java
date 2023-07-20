@@ -55,11 +55,11 @@ public class ParticipanteController {
         }
     }
 
-    @RequestMapping(value = "/getByCedula/{cedula}",method = RequestMethod.GET)
-    public ResponseEntity<?> findByCedulaLike(@PathVariable("cedula") long cedula) {
+    @RequestMapping(value = "/getByTipoDocumentoAndCedula/{tipoDocumento}/{cedula}",method = RequestMethod.GET)
+    public ResponseEntity<?> findByTipoDocumentoAndCedulaLike(@PathVariable("tipoDocumento") String tipoDocumento, @PathVariable("cedula") long cedula) {
         try {
             //obtener datos que se enviarán a través del API
-            return new ResponseEntity<>(participanteService.findByCedulaLike(cedula), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(participanteService.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula), HttpStatus.ACCEPTED);
         } catch (Exception ex) {
             Logger.getLogger(ParticipanteController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);

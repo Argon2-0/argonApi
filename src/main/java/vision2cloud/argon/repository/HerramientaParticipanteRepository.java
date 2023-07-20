@@ -19,5 +19,5 @@ public interface HerramientaParticipanteRepository extends JpaRepository<Herrami
     HerramientaParticipante findByHerramientaIdAndEstado(Long herramienta_id, String estado);
     List<HerramientaParticipante> findByEstado(String estado);
     List<HerramientaParticipante> findByCreatedAtBetweenAndHerramientaId(Timestamp start, Timestamp end, Long herramientaID);
-
+    List<HerramientaParticipante> findByParticipanteIdAndEstado(long participante, String estado);
 }

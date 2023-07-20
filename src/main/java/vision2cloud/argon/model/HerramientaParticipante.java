@@ -1,7 +1,5 @@
 package vision2cloud.argon.model;
 
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -16,8 +14,10 @@ public class HerramientaParticipante {
     private Participante participante;
     @ManyToOne
     private Herramienta herramienta;
-    @Column(name = "observacion")
-    private String observacion;
+    @Column(name = "observacionSalida")
+    private String observacionSalida;
+    @Column(name = "observacionEntrada")
+    private String observacionEntrada;
     @Column(name = "estado")
     private String estado;
     @Column(name = "totHoras")
@@ -30,13 +30,15 @@ public class HerramientaParticipante {
     public HerramientaParticipante() {
     }
 
-    public HerramientaParticipante(long id, Participante participante, Herramienta herramienta, String observacion, String estado, Long tot_horas, Timestamp createdAt, Timestamp updatedAt) {
+
+    public HerramientaParticipante(long id, Participante participante, Herramienta herramienta, String observacionSalida, String observacionEntrada, String estado, Long totHoras, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.participante = participante;
         this.herramienta = herramienta;
-        this.observacion = observacion;
+        this.observacionSalida = observacionSalida;
+        this.observacionEntrada = observacionEntrada;
         this.estado = estado;
-        this.totHoras = tot_horas;
+        this.totHoras = totHoras;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -65,12 +67,28 @@ public class HerramientaParticipante {
         this.herramienta = herramienta;
     }
 
-    public String getObservacion() {
-        return observacion;
+    public String getObservacionSalida() {
+        return observacionSalida;
     }
 
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
+    public void setObservacionSalida(String observacionSalida) {
+        this.observacionSalida = observacionSalida;
+    }
+
+    public String getObservacionEntrada() {
+        return observacionEntrada;
+    }
+
+    public void setObservacionEntrada(String observacionEntrada) {
+        this.observacionEntrada = observacionEntrada;
+    }
+
+    public Long getTotHoras() {
+        return totHoras;
+    }
+
+    public void setTotHoras(Long totHoras) {
+        this.totHoras = totHoras;
     }
 
     public String getEstado() {
@@ -107,11 +125,12 @@ public class HerramientaParticipante {
 
     @Override
     public String toString() {
-        return "HerramientaParticipantes{" +
+        return "HerramientaParticipante{" +
                 "id=" + id +
                 ", participante=" + participante +
                 ", herramienta=" + herramienta +
-                ", observacion='" + observacion + '\'' +
+                ", observacionSalida='" + observacionSalida + '\'' +
+                ", observacionEntrada='" + observacionEntrada + '\'' +
                 ", estado='" + estado + '\'' +
                 ", totHoras=" + totHoras +
                 ", createdAt=" + createdAt +

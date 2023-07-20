@@ -112,4 +112,14 @@ public class HerramientaParticipanteController {
         }
     }
 
+    @RequestMapping(value = "/getByParticipanteIdAndEstado/{tipoDocumento}/{documento}/{estado}",method = RequestMethod.POST)
+    public ResponseEntity<?> findByParticipanteIdAndEstado(@PathVariable("tipoDocumento") String tipoDocumento,@PathVariable("documento") long documento, @PathVariable("estado") String estado) {
+        try {
+            //obtener datos que se enviarán a través del API
+            return new ResponseEntity<>(herramientaParticipanteService.findByParticipanteIdAndEstado(tipoDocumento, documento, estado), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(HerramientaParticipanteController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
