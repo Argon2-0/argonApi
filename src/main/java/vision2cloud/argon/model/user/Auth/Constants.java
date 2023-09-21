@@ -6,7 +6,7 @@ public class Constants {
     public static final String CLAIMS_NAME_KEY = "name";
     public static final String CLAIMS_EMAIL_KEY = "email";
     // Token expiration defined time
-    public static final int TOKEN_DURATION_MINUTES = 1;
+    public static final int TOKEN_DURATION_MINUTES = 20;
     public static final String COOKIE_NAME = "algo";
 
 }

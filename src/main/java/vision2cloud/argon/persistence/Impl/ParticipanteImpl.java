@@ -43,10 +43,6 @@ public class ParticipanteImpl implements ParticipantePersistence {
 
     @Override
     public List<Participante> getParticipanteBetween(Timestamp start, Timestamp end) {
-        List<Participante> participantes = participanteRepository.findByCreatedAtBetween(start,end);
-        for(Participante participante: participantes){
-            System.out.println(participante.toString());
-        }
         return participanteRepository.findByCreatedAtBetween(start,end);
     }
 
@@ -142,5 +138,11 @@ public class ParticipanteImpl implements ParticipantePersistence {
         actualParticipante.setEstado(participante.getEstado());
         actualParticipante.setupdatedAt(participante.getCreatedAt());
         return participanteRepository.save(actualParticipante);
+    }
+
+    @Override
+    public List<Participante> getParticipanteBetweenAndTipoServicio(Timestamp start, Timestamp end, String tiposervicio) {
+        participanteRepository.findByCreatedAtBetween(start,end);
+        return participanteRepository.findByTiposervicioIdAndCreatedAtBetween(Long.parseLong(tiposervicio),start,end);
     }
 }

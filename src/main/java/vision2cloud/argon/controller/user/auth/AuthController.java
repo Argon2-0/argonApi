@@ -4,12 +4,15 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 import vision2cloud.argon.model.user.Auth.Token;
 import vision2cloud.argon.model.user.UserInfo;
+import vision2cloud.argon.service.TipoServicioService;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.Calendar;
@@ -23,11 +26,14 @@ import static vision2cloud.argon.model.user.Auth.Constants.*;
 @RequestMapping( "/accessbiosecurity/auth" )
 public class AuthController
 {
+    @Autowired
+    @Qualifier("AuthService")
+    AuthService authService;
     @RequestMapping(value = "/generate",method = RequestMethod.POST)
     @ResponseBody
     public Token generateToken(@RequestBody UserInfo userInfo )
     {
-        return TokenGenerator( userInfo );
+        return authService.TokenGenerator( userInfo );
     }
 
     @RequestMapping(value = "/validate",method = RequestMethod.POST)
@@ -49,26 +55,5 @@ public class AuthController
                 claims.getExpiration().after(new Date());
     }
 
-    private String generateTokenHash(UserInfo usuario, Date expirationDate )
-    {
 
-        return Jwts.builder()
-                .setSubject(String.valueOf(usuario.getId()))
-                .claim(CLAIMS_NAME_KEY, usuario.getName())
-                .claim(CLAIMS_EMAIL_KEY, usuario.getEmail())
-                .claim( CLAIMS_ROLES_KEY, usuario.getRole() )
-                .setId(UUID.randomUUID().toString())
-                .setIssuedAt(new Date() )
-                .setExpiration( expirationDate )
-                .signWith( SignatureAlgorithm.HS256, SECRET_KEY )
-                .compact();
-    }
-
-    private Token TokenGenerator( UserInfo usuario )
-    {
-        Calendar expirationDate = Calendar.getInstance();
-        expirationDate.add( Calendar.MINUTE, TOKEN_DURATION_MINUTES );
-        String token = generateTokenHash( usuario, expirationDate.getTime() );
-        return new Token( token, expirationDate.getTime() );
-    }
 }

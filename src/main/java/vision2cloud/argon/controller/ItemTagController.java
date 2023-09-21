@@ -5,10 +5,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import vision2cloud.argon.controller.user.auth.AuthService;
 import vision2cloud.argon.model.ItemTag;
 import vision2cloud.argon.service.ItemService;
 import vision2cloud.argon.service.ItemTagService;
+import vision2cloud.argon.service.TipoServicioService;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,12 +26,30 @@ public class ItemTagController {
     @Qualifier("ItemTagService")
     ItemTagService itemTagService;
 
+    @Autowired
+    @Qualifier("AuthService")
+    AuthService authService;
+
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> create(@RequestBody ItemTag itemTag) {
         try {
             //obtener datos que se enviarán a través del API
-            return new ResponseEntity<>(itemTagService.create(itemTag), HttpStatus.ACCEPTED);
+            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
+            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
+            Timestamp lastTime = new Timestamp(milisLastTime);
+            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
+            Timestamp currentTime = new Timestamp(milisCurrentTime);
+            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            //obtener datos que se enviarán a través del API
+            if(Boolean.parseBoolean(respuesta.get(0))){
+                ArrayList<Object> response = new ArrayList<Object>();
+                response.add( respuesta.get(1));
+                response.add(itemTagService.create(itemTag));
+                return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+            }
+            return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
         } catch (Exception ex) {
             Logger.getLogger(ItemTagController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
@@ -36,7 +60,21 @@ public class ItemTagController {
     public ResponseEntity<?> getItemsTags() {
         try {
             //obtener datos que se enviarán a través del API
-            return new ResponseEntity<>(itemTagService.getItemsTags(), HttpStatus.ACCEPTED);
+            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
+            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
+            Timestamp lastTime = new Timestamp(milisLastTime);
+            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
+            Timestamp currentTime = new Timestamp(milisCurrentTime);
+            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            //obtener datos que se enviarán a través del API
+            if(Boolean.parseBoolean(respuesta.get(0))){
+                ArrayList<Object> response = new ArrayList<Object>();
+                response.add( respuesta.get(1));
+                response.add(itemTagService.getItemsTags());
+                return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+            }
+            return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
         } catch (Exception ex) {
             Logger.getLogger(ItemTagController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);

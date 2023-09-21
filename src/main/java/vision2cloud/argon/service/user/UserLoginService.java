@@ -16,7 +16,7 @@ public class UserLoginService {
     @Qualifier("UserLoginImpl")
     UserLoginImpl userLoginImpl;
 
-    public UserLogin Login(String email, String password){return userLoginImpl.Login(email, password);}
+    public UserLogin Login(String email){return userLoginImpl.Login(email);}
 
     public Object update(UserLogin user) {
         return userLoginImpl.update(user);

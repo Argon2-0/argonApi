@@ -17,7 +17,7 @@ public class UserLoginImpl implements UserLoginPersistence {
     UserLoginRepository userLoginRepository;
 
     @Override
-    public UserLogin Login(String email, String password) {
+    public UserLogin Login(String email) {
         return userLoginRepository.findByEmail(email);
     }
 

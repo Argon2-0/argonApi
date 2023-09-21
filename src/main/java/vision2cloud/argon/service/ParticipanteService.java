@@ -3,6 +3,7 @@ package vision2cloud.argon.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import vision2cloud.argon.model.Herramienta;
 import vision2cloud.argon.model.Participante;
 import vision2cloud.argon.model.TipoServicio;
 import vision2cloud.argon.persistence.Impl.ParticipanteImpl;
@@ -72,5 +73,12 @@ public class ParticipanteService {
 
     public Object update(Participante participante) {
         return participanteImpl.update(participante);
+    }
+
+    public List<Participante> findBetweenAndTipoServicio(Timestamp start, Timestamp end, String tiposervicio) {
+        if(tiposervicio.equals("Todos")){
+            return participanteImpl.getParticipanteBetween(start, end);
+        }
+        return participanteImpl.getParticipanteBetweenAndTipoServicio(start,end,tiposervicio);
     }
 }

@@ -23,4 +23,6 @@ public interface ParticipantePersistence {
     List<Object> findDistinctByCedulaAndCreatedAtBetween(Timestamp start, Timestamp end);
 
     Object update(Participante participante);
+
+    List<Participante> getParticipanteBetweenAndTipoServicio(Timestamp start, Timestamp end, String tiposervicio);
 }
