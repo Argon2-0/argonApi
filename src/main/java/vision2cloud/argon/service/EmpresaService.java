@@ -25,8 +25,8 @@ public class EmpresaService {
         return empresaImpl.getEmpresas();
     }
 
-    public Empresa getEmpresaById(int id) {
-        return empresaImpl.getEmpresaById(id);
+    public Empresa getEmpresaByNit(int nit) {
+        return empresaImpl.getEmpresaByNit(nit);
     }
 
     public Object update(Empresa item) {

@@ -30,13 +30,19 @@ public class EmpresaImpl implements EmpresaPersistence {
     }
 
     @Override
-    public Empresa getEmpresaById(int id) {
-        return empresaRepository.findById(id).get();
+    public Empresa getEmpresaByNit(int nit) {
+        List<Empresa> empresas = empresaRepository.findAll();
+        for (Empresa empresa: empresas){
+            if (empresa.getNit() == nit){
+                return empresa;
+            }
+        }
+        return null;
     }
 
     @Override
     public Object update(Empresa empresa) {
-        Empresa actualEmpresa = getEmpresaById(empresa.getId());
+        Empresa actualEmpresa = getEmpresaByNit(empresa.getNit());
         actualEmpresa.setNombre(empresa.getNombre());
         return empresaRepository.save(actualEmpresa);
     }

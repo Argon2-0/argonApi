@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import vision2cloud.argon.controller.user.auth.AuthService;
-import vision2cloud.argon.model.Empresa;
-import vision2cloud.argon.model.Item;
-import vision2cloud.argon.model.TipoServicio;
-import vision2cloud.argon.service.EmpresaService;
+import vision2cloud.argon.model.Curso;
+import vision2cloud.argon.model.VisitanteCurso;
+import vision2cloud.argon.service.CursoService;
+import vision2cloud.argon.service.VisitanteCursoService;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -19,11 +19,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping( "/accessbiosecurity/empresa")
-public class EmpresaController {
+@RequestMapping( "/accessbiosecurity/visitantecurso")
+public class VisitanteCursoController {
     @Autowired
-    @Qualifier("EmpresaService")
-    EmpresaService empresaService;
+    @Qualifier("VisitanteCursoService")
+    VisitanteCursoService visitanteCursoService;
 
     @Autowired
     @Qualifier("AuthService")
@@ -31,7 +31,7 @@ public class EmpresaController {
 
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody Empresa empresa) {
+    public ResponseEntity<?> create(@RequestBody VisitanteCurso visitanteCurso) {
         try {
             //obtener datos que se enviarán a través del API
             String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
@@ -44,19 +44,19 @@ public class EmpresaController {
             if(Boolean.parseBoolean(respuesta.get(0))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
-                response.add(empresaService.create(empresa));
+                response.add(visitanteCursoService.create(visitanteCurso));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
             }
             return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
         } catch (Exception ex) {
-            Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisitanteCursoController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping(value = "/getAll",method = RequestMethod.GET)
-    public ResponseEntity<?> getEmpresas() {
+    public ResponseEntity<?> getCursoss() {
         try {
             //obtener datos que se enviarán a través del API
             String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
@@ -69,19 +69,19 @@ public class EmpresaController {
             if(Boolean.parseBoolean(respuesta.get(0))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
-                response.add(empresaService.getEmpresas());
+                response.add(visitanteCursoService.getVisitantesCursos());
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
             }
             return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
         } catch (Exception ex) {
-            Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisitanteCursoController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping(value = "/getByNit/{nit}",method = RequestMethod.GET)
-    public ResponseEntity<?> getEmpresaById(@PathVariable("nit") int nit) {
+    public ResponseEntity<?> getCursoByCodigo(@PathVariable("codigo") long id) {
         try {
             //obtener datos que se enviarán a través del API
             String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
@@ -94,20 +94,20 @@ public class EmpresaController {
             if(Boolean.parseBoolean(respuesta.get(0))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
-                response.add(empresaService.getEmpresaByNit(nit));
+                response.add(visitanteCursoService.getVisitanteCursoById(id));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
             }
             return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
         } catch (Exception ex) {
-            Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisitanteCursoController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<?> update(@RequestBody Empresa empresa) {
+    public ResponseEntity<?> update(@RequestBody VisitanteCurso visitanteCurso) {
         try {
             //obtener datos que se enviarán a través del API
             String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
@@ -120,20 +120,20 @@ public class EmpresaController {
             if(Boolean.parseBoolean(respuesta.get(0))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
-                response.add(empresaService.update(empresa));
+                response.add(visitanteCursoService.update(visitanteCurso));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
             }
             return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
         } catch (Exception ex) {
-            Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisitanteCursoController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping(value = "/createMasive",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> createMasive(@RequestBody ArrayList<Empresa> empresa) {
+    public ResponseEntity<?> createMasive(@RequestBody ArrayList<VisitanteCurso> visitantesCursos) {
         try {
             //obtener datos que se enviarán a través del API
             String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
@@ -146,13 +146,13 @@ public class EmpresaController {
             if(Boolean.parseBoolean(respuesta.get(0))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
-                response.add(empresaService.createMasive(empresa));
+                response.add(visitanteCursoService.createMasive(visitantesCursos));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
             }
             return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
 
         } catch (Exception ex) {
-            Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisitanteCursoController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

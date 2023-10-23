@@ -30,7 +30,7 @@ public class Participante {
     @ManyToOne
     private TipoServicio tiposervicio;
     @Column(name = "curso")
-    private String curso;
+    private Long curso;
     @Column(name = "tratDatos")
     private String tratDatos;
     @Column(name = "estado")
@@ -43,7 +43,7 @@ public class Participante {
     public Participante() {
     }
 
-    public Participante(Long id, String tipoDocumento, Long cedula, String nombres, String apellidos, Timestamp fechaNacimiento, String celular, String sexo, String email, TipoServicio tiposervicio, String curso, String tratDatos, String estado, Timestamp createdAt, Timestamp updatedAt) {
+    public Participante(Long id, String tipoDocumento, Long cedula, String nombres, String apellidos, Timestamp fechaNacimiento, String celular, String sexo, String email, TipoServicio tiposervicio, Long curso, String tratDatos, String estado, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.tipoDocumento = tipoDocumento;
         this.cedula = cedula;
@@ -141,11 +141,11 @@ public class Participante {
         this.tiposervicio = tiposervicio;
     }
 
-    public String getCurso() {
+    public Long getCurso() {
         return curso;
     }
 
-    public void setCurso(String curso) {
+    public void setCurso(Long curso) {
         this.curso = curso;
     }
 

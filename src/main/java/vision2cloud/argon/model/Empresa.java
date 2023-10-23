@@ -7,26 +7,25 @@ import javax.persistence.*;
 public class Empresa {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "nit")
+    private int nit;
     @Column(name = "nombre")
     private String nombre;
 
     public Empresa() {
     }
 
-    public Empresa(int id, String nombre) {
-        this.id = id;
+    public Empresa(int nit, String nombre) {
+        this.nit = nit;
         this.nombre = nombre;
     }
 
-    public int getId() {
-        return id;
+    public int getNit() {
+        return nit;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setNit(int nit) {
+        this.nit = nit;
     }
 
     public String getNombre() {
@@ -40,7 +39,7 @@ public class Empresa {
     @Override
     public String toString() {
         return "Empresa{" +
-                "id=" + id +
+                "nit=" + nit +
                 ", nombre='" + nombre + '\'' +
                 '}';
     }

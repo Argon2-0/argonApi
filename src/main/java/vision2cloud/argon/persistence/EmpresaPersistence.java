@@ -9,7 +9,7 @@ import java.util.List;
 public interface EmpresaPersistence {
     Object create(Empresa item);
     List<Empresa> getEmpresas();
-    Empresa getEmpresaById(int id);
+    Empresa getEmpresaByNit(int nit);
     Object update(Empresa item);
 
     Object createMasive(ArrayList<Empresa> empresas);
