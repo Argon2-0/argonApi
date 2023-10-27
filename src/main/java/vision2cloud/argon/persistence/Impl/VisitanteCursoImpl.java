@@ -3,13 +3,11 @@ package vision2cloud.argon.persistence.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import vision2cloud.argon.model.Curso;
 import vision2cloud.argon.model.VisitanteCurso;
-import vision2cloud.argon.persistence.CursoPersistence;
 import vision2cloud.argon.persistence.VisitanteCursoPersistence;
-import vision2cloud.argon.repository.CursoRepository;
 import vision2cloud.argon.repository.VistanteCursoRepository;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,5 +43,15 @@ public class VisitanteCursoImpl implements VisitanteCursoPersistence {
     @Override
     public Object createMasive(ArrayList<VisitanteCurso> cursos) {
         return visitanteCursoRepository.saveAll(cursos);
+    }
+
+    @Override
+    public List<VisitanteCurso> findByDiaInicioBetweenOrDiaFinBetween(Timestamp start, Timestamp end) {
+        return visitanteCursoRepository.findByDiaInicioBetweenOrDiaFinBetween(start,end, start, end);
+    }
+
+    @Override
+    public List<VisitanteCurso> findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(Timestamp start, Timestamp end, String codigo) {
+        return visitanteCursoRepository.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(codigo, start, end, start, end);
     }
 }

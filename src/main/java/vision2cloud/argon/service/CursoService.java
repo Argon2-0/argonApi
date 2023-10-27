@@ -25,8 +25,8 @@ public class CursoService {
         return cursoImpl.getCursos();
     }
 
-    public Curso getCursoByCodigo(String codigo) {
-        return cursoImpl.getCursoByCodigo(codigo);
+    public Curso findByCodigoLike(String codigo) {
+        return cursoImpl.findByCodigoLike(codigo);
     }
 
     public Object update(Curso item) {

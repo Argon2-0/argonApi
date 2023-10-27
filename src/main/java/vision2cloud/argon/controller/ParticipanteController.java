@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import vision2cloud.argon.controller.user.auth.AuthService;
+import vision2cloud.argon.model.Curso;
 import vision2cloud.argon.model.Participante;
 import vision2cloud.argon.model.RequestReporte;
 import vision2cloud.argon.service.ParticipanteService;
@@ -329,6 +330,32 @@ public class ParticipanteController {
             return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
         } catch (Exception ex) {
             Logger.getLogger(HerramientaParticipanteController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/createMasive",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> createMasive(@RequestBody ArrayList<Participante> participantes) {
+        try {
+            //obtener datos que se enviarán a través del API
+            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
+            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
+            Timestamp lastTime = new Timestamp(milisLastTime);
+            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
+            Timestamp currentTime = new Timestamp(milisCurrentTime);
+            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            //obtener datos que se enviarán a través del API
+            if(Boolean.parseBoolean(respuesta.get(0))){
+                ArrayList<Object> response = new ArrayList<Object>();
+                response.add( respuesta.get(1));
+                response.add(participanteService.createMasive(participantes));
+                return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+            }
+            return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
+
+        } catch (Exception ex) {
+            Logger.getLogger(CursoController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

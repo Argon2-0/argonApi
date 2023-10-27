@@ -3,6 +3,7 @@ package vision2cloud.argon.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import vision2cloud.argon.model.Curso;
 import vision2cloud.argon.model.Herramienta;
 import vision2cloud.argon.model.Participante;
 import vision2cloud.argon.model.TipoServicio;
@@ -11,6 +12,7 @@ import vision2cloud.argon.persistence.Impl.TipoServicioImpl;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("ParticipanteService")
@@ -80,5 +82,9 @@ public class ParticipanteService {
             return participanteImpl.getParticipanteBetween(start, end);
         }
         return participanteImpl.getParticipanteBetweenAndTipoServicio(start,end,tiposervicio);
+    }
+
+    public Object createMasive(ArrayList<Participante> participantes) {
+        return participanteImpl.createMasive(participantes);
     }
 }

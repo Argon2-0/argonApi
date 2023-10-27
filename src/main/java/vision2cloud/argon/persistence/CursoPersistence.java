@@ -9,7 +9,7 @@ import java.util.List;
 public interface CursoPersistence {
     Object create(Curso item);
     List<Curso> getCursos();
-    Curso getCursoByCodigo(String codigo);
+    Curso findByCodigoLike(String codigo);
     Object update(Curso item);
 
     Object createMasive(ArrayList<Curso> cursos);

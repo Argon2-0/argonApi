@@ -33,6 +33,7 @@ public class VisitanteCursoController {
     @ResponseBody
     public ResponseEntity<?> create(@RequestBody VisitanteCurso visitanteCurso) {
         try {
+            System.out.println(visitanteCurso.toString());
             //obtener datos que se enviarán a través del API
             String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
             Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
@@ -153,6 +154,33 @@ public class VisitanteCursoController {
 
         } catch (Exception ex) {
             Logger.getLogger(VisitanteCursoController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/getByTimeAndCurso/{start}/{end}/{codigo}",method = RequestMethod.GET)
+    public ResponseEntity<?> findBetweenAndCurso(@PathVariable("start") Long start, @PathVariable("end") Long end, @PathVariable("codigo") String codigo) {
+        System.out.println("aassssdasfasfafasfa");
+        try {
+            //obtener datos que se enviarán a través del API
+            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
+            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
+            Timestamp lastTime = new Timestamp(milisLastTime);
+            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
+            Timestamp currentTime = new Timestamp(milisCurrentTime);
+            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            //obtener datos que se enviarán a través del API
+            if(Boolean.parseBoolean(respuesta.get(0))){
+
+                ArrayList<Object> response = new ArrayList<Object>();
+                response.add( respuesta.get(1));
+                response.add(visitanteCursoService.findBetweenAndCurso(new Timestamp(start), new Timestamp(end), codigo));
+                return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+            }
+            return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
+        } catch (Exception ex) {
+            Logger.getLogger(HerramientaParticipanteController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

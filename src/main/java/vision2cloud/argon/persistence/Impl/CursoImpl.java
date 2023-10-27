@@ -30,19 +30,13 @@ public class CursoImpl implements CursoPersistence {
     }
 
     @Override
-    public Curso getCursoByCodigo(String codigo) {
-        List<Curso> cursos = cursoRepository.findAll();
-        for (Curso curso: cursos){
-            if (curso.getCodigo() == codigo){
-                return curso;
-            }
-        }
-        return null;
+    public Curso findByCodigoLike(String codigo) {
+        return cursoRepository.findByCodigoLike(codigo);
     }
 
     @Override
     public Object update(Curso curso) {
-        Curso actualCurso = getCursoByCodigo(curso.getCodigo());
+        Curso actualCurso = cursoRepository.findByCodigoLike(curso.getCodigo());
         actualCurso.setNombre(curso.getNombre());
         return cursoRepository.save(actualCurso);
     }

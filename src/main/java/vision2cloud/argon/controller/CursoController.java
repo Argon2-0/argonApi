@@ -94,7 +94,7 @@ public class CursoController {
             if(Boolean.parseBoolean(respuesta.get(0))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
-                response.add(cursoService.getCursoByCodigo(codigo));
+                response.add(cursoService.findByCodigoLike(codigo));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
             }

@@ -1,10 +1,12 @@
 package vision2cloud.argon.persistence;
 
+import vision2cloud.argon.model.Curso;
 import vision2cloud.argon.model.Migration;
 import vision2cloud.argon.model.Participante;
 import vision2cloud.argon.model.TipoServicio;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,4 +27,6 @@ public interface ParticipantePersistence {
     Object update(Participante participante);
 
     List<Participante> getParticipanteBetweenAndTipoServicio(Timestamp start, Timestamp end, String tiposervicio);
+
+    Object createMasive(ArrayList<Participante> participantes);
 }

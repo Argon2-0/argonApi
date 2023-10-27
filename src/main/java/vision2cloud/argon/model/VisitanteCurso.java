@@ -15,13 +15,20 @@ public class VisitanteCurso {
     @Column(name = "cursoCodigo")
     private String cursoCodigo;
 
+    @Column(name = "diaInicio")
+    private Timestamp diaInicio;
+    @Column(name = "diaFin")
+    private Timestamp diaFin;
+
     public VisitanteCurso() {
     }
 
-    public VisitanteCurso(long id, Long visitanteId, String cursoCodigo) {
+    public VisitanteCurso(long id, Long visitanteId, String cursoCodigo, Timestamp diaInicio, Timestamp diaFin) {
         this.id = id;
         this.visitanteId = visitanteId;
         this.cursoCodigo = cursoCodigo;
+        this.diaInicio = diaInicio;
+        this.diaFin = diaFin;
     }
 
     public long getId() {
@@ -48,12 +55,30 @@ public class VisitanteCurso {
         this.cursoCodigo = cursoCodigo;
     }
 
+    public Timestamp getDiaInicio() {
+        return diaInicio;
+    }
+
+    public void setDiaInicio(Timestamp diaInicio) {
+        this.diaInicio = diaInicio;
+    }
+
+    public Timestamp getDiaFin() {
+        return diaFin;
+    }
+
+    public void setDiaFin(Timestamp diaFin) {
+        this.diaFin = diaFin;
+    }
+
     @Override
     public String toString() {
-        return "Role{" +
+        return "VisitanteCurso{" +
                 "id=" + id +
-                ", visitanteId='" + visitanteId + '\'' +
-                ", cursoCodigo='" + cursoCodigo +
+                ", visitanteId=" + visitanteId +
+                ", cursoCodigo='" + cursoCodigo + '\'' +
+                ", diaInicio=" + diaInicio +
+                ", diaFin=" + diaFin +
                 '}';
     }
 }

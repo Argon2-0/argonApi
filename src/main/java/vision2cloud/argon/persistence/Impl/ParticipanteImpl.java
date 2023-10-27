@@ -3,6 +3,7 @@ package vision2cloud.argon.persistence.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import vision2cloud.argon.model.Curso;
 import vision2cloud.argon.model.Participante;
 import vision2cloud.argon.model.TipoServicio;
 import vision2cloud.argon.persistence.ParticipantePersistence;
@@ -144,5 +145,10 @@ public class ParticipanteImpl implements ParticipantePersistence {
     public List<Participante> getParticipanteBetweenAndTipoServicio(Timestamp start, Timestamp end, String tiposervicio) {
         participanteRepository.findByCreatedAtBetween(start,end);
         return participanteRepository.findByTiposervicioIdAndCreatedAtBetween(Long.parseLong(tiposervicio),start,end);
+    }
+
+    @Override
+    public Object createMasive(ArrayList<Participante> participantes) {
+        return participanteRepository.saveAll(participantes);
     }
 }

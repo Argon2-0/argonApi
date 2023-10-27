@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Service("PersonService")
 public class PersonService {
@@ -49,5 +50,26 @@ public class PersonService {
         }
 
         return personImpl.create(person);
+    }
+
+    public Object createMasive(ArrayList<Person> persons) throws URISyntaxException {
+        LocalDate ld = LocalDate.now();
+        System.out.println(ld);
+        try {
+            for (Person person : persons) {
+                person.setAccStartTime(Timestamp.valueOf(ld.atStartOfDay()).toString());
+                person.setAccEndTime(Timestamp.valueOf(ld.plusDays(1).atStartOfDay()).toString());
+                if (person.getEmail().equals("")) {
+                    person.setEmail("123@zkt.com");
+                }
+                System.out.println(Timestamp.valueOf(ld.atStartOfDay()).toString());
+                System.out.println(Timestamp.valueOf(ld.plusDays(1).atStartOfDay()).toString());
+                personImpl.create(person);
+            }
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 }
