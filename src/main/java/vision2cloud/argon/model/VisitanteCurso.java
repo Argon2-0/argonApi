@@ -23,6 +23,12 @@ public class VisitanteCurso {
     public VisitanteCurso() {
     }
 
+    public VisitanteCurso( Long visitanteId, String cursoCodigo, Timestamp diaInicio, Timestamp diaFin) {
+        this.visitanteId = visitanteId;
+        this.cursoCodigo = cursoCodigo;
+        this.diaInicio = diaInicio;
+        this.diaFin = diaFin;
+    }
     public VisitanteCurso(long id, Long visitanteId, String cursoCodigo, Timestamp diaInicio, Timestamp diaFin) {
         this.id = id;
         this.visitanteId = visitanteId;

@@ -3,14 +3,12 @@ package vision2cloud.argon.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import vision2cloud.argon.model.Curso;
-import vision2cloud.argon.model.CursoInforme;
-import vision2cloud.argon.model.Participante;
-import vision2cloud.argon.model.VisitanteCurso;
+import vision2cloud.argon.model.*;
 import vision2cloud.argon.persistence.Impl.CursoImpl;
 import vision2cloud.argon.persistence.Impl.ParticipanteImpl;
 import vision2cloud.argon.persistence.Impl.VisitanteCursoImpl;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +43,19 @@ public class VisitanteCursoService {
         return visitanteCursoImpl.update(item);
     }
 
-    public Object createMasive(ArrayList<VisitanteCurso> cursos) {
-        return visitanteCursoImpl.createMasive(cursos);
+    public Object createMasive(ArrayList<RegistroCurso> cursos) {
+        ArrayList<VisitanteCurso> visitanteCursos = new ArrayList<>();
+        for (RegistroCurso registroCurso: cursos){
+            visitanteCursos.add(
+                    new VisitanteCurso(
+                            participanteImpl.findByTipoDocumentoAndCedulaLike(registroCurso.getTipoDocumento(), registroCurso.getNumeroDocumento()).getId(),
+                            registroCurso.getCodigo(),
+                            registroCurso.getFechaInicio(),
+                            registroCurso.getFechaFin()
+                    )
+            );
+        }
+        return visitanteCursoImpl.createMasive(visitanteCursos);
     }
 
     public List<CursoInforme> findBetweenAndCurso(Timestamp start, Timestamp end, String codigo) {

@@ -18,15 +18,19 @@ public class PersonService {
     @Qualifier("PersonImpl")
     PersonImpl personImpl;
     public Object create(Person person) throws URISyntaxException {
-        LocalDate ld = LocalDate.now();
-        System.out.println(ld);
-        person.setAccStartTime(Timestamp.valueOf(ld.atStartOfDay()).toString());
-        person.setAccEndTime(Timestamp.valueOf(ld.plusDays(1).atStartOfDay()).toString());
-        if(person.getEmail().equals("")){
+        if(person.getAccStartTime().isEmpty() || person.getAccEndTime().isEmpty()){
+            LocalDate ld = LocalDate.now();
+            System.out.println(ld);
+            person.setAccStartTime(Timestamp.valueOf(ld.atStartOfDay()).toString());
+            person.setAccEndTime(Timestamp.valueOf(ld.plusDays(1).atStartOfDay()).toString());
+        }
+        else
+            person.setAccStartTime(Timestamp.valueOf(new Timestamp(Long.parseLong(person.getAccStartTime())).toLocalDateTime()).toString());{
+            person.setAccEndTime(Timestamp.valueOf(new Timestamp(Long.parseLong(person.getAccEndTime())).toLocalDateTime().plusDays(1)).toString());
+        }
+        if(person.getEmail().isEmpty()){
             person.setEmail("123@zkt.com");
         }
-        System.out.println(Timestamp.valueOf(ld.atStartOfDay()).toString());
-        System.out.println(Timestamp.valueOf(ld.plusDays(1).atStartOfDay()).toString());
         return personImpl.create(person);
     }
 
@@ -53,17 +57,13 @@ public class PersonService {
     }
 
     public Object createMasive(ArrayList<Person> persons) throws URISyntaxException {
-        LocalDate ld = LocalDate.now();
-        System.out.println(ld);
         try {
             for (Person person : persons) {
-                person.setAccStartTime(Timestamp.valueOf(ld.atStartOfDay()).toString());
-                person.setAccEndTime(Timestamp.valueOf(ld.plusDays(1).atStartOfDay()).toString());
+                person.setAccStartTime(Timestamp.valueOf(new Timestamp(Long.parseLong(person.getAccStartTime())).toLocalDateTime()).toString());
+                person.setAccEndTime(Timestamp.valueOf(new Timestamp(Long.parseLong(person.getAccEndTime())).toLocalDateTime().plusDays(1)).toString());
                 if (person.getEmail().equals("")) {
                     person.setEmail("123@zkt.com");
                 }
-                System.out.println(Timestamp.valueOf(ld.atStartOfDay()).toString());
-                System.out.println(Timestamp.valueOf(ld.plusDays(1).atStartOfDay()).toString());
                 personImpl.create(person);
             }
             return true;

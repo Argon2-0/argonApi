@@ -27,7 +27,7 @@ public class ParticipanteService {
 
     public Object create(Participante participante) {
         try{
-            Participante participante1 = findByTipoDocumentoAndCedulaLike(participante.gettipoDocumento(), participante.getCedula());
+            Participante participante1 = findByTipoDocumentoAndCedulaLike(participante.getTipoDocumento(), participante.getCedula());
             participante.setId(participante1.getId());
             return participanteImpl.update(participante);
         }catch (Exception e){
@@ -38,7 +38,7 @@ public class ParticipanteService {
         return participanteImpl.getParticipantes();
     }
     public Participante findByTipoDocumentoAndCedulaLike(String tipoDocumento,long cedula) {
-        System.out.println(participanteImpl.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula).getfechaNacimiento());
+        System.out.println(participanteImpl.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula).getFechaNacimiento());
         System.out.println(participanteImpl.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula).getCreatedAt());
         return participanteImpl.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula);
     }

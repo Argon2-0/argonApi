@@ -9,6 +9,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import vision2cloud.argon.controller.user.auth.AuthService;
 import vision2cloud.argon.model.Curso;
+import vision2cloud.argon.model.RegistroCurso;
 import vision2cloud.argon.model.VisitanteCurso;
 import vision2cloud.argon.service.CursoService;
 import vision2cloud.argon.service.VisitanteCursoService;
@@ -134,7 +135,7 @@ public class VisitanteCursoController {
 
     @RequestMapping(value = "/createMasive",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> createMasive(@RequestBody ArrayList<VisitanteCurso> visitantesCursos) {
+    public ResponseEntity<?> createMasive(@RequestBody ArrayList<RegistroCurso> visitantesCursos) {
         try {
             //obtener datos que se enviarán a través del API
             String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");

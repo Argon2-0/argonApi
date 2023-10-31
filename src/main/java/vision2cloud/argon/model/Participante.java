@@ -29,6 +29,8 @@ public class Participante {
     private String email;
     @ManyToOne
     private TipoServicio tiposervicio;
+    @ManyToOne
+    private Empresa empresa;
     @Column(name = "curso")
     private Long curso;
     @Column(name = "tratDatos")
@@ -43,7 +45,7 @@ public class Participante {
     public Participante() {
     }
 
-    public Participante(Long id, String tipoDocumento, Long cedula, String nombres, String apellidos, Timestamp fechaNacimiento, String celular, String sexo, String email, TipoServicio tiposervicio, Long curso, String tratDatos, String estado, Timestamp createdAt, Timestamp updatedAt) {
+    public Participante(Long id, String tipoDocumento, Long cedula, String nombres, String apellidos, Timestamp fechaNacimiento, String celular, String sexo, String email, TipoServicio tiposervicio, Empresa empresa, Long curso, String tratDatos, String estado, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.tipoDocumento = tipoDocumento;
         this.cedula = cedula;
@@ -54,6 +56,7 @@ public class Participante {
         this.sexo = sexo;
         this.email = email;
         this.tiposervicio = tiposervicio;
+        this.empresa = empresa;
         this.curso = curso;
         this.tratDatos = tratDatos;
         this.estado = estado;
@@ -69,11 +72,11 @@ public class Participante {
         this.id = id;
     }
 
-    public String gettipoDocumento() {
+    public String getTipoDocumento() {
         return tipoDocumento;
     }
 
-    public void settipoDocumento(String tipoDocumento) {
+    public void setTipoDocumento(String tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
 
@@ -101,11 +104,11 @@ public class Participante {
         this.apellidos = apellidos;
     }
 
-    public Timestamp getfechaNacimiento() {
+    public Timestamp getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setfechaNacimiento(Timestamp fechaNacimiento) {
+    public void setFechaNacimiento(Timestamp fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -141,6 +144,14 @@ public class Participante {
         this.tiposervicio = tiposervicio;
     }
 
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
     public Long getCurso() {
         return curso;
     }
@@ -149,11 +160,11 @@ public class Participante {
         this.curso = curso;
     }
 
-    public String gettratDatos() {
+    public String getTratDatos() {
         return tratDatos;
     }
 
-    public void settratDatos(String tratDatos) {
+    public void setTratDatos(String tratDatos) {
         this.tratDatos = tratDatos;
     }
 
@@ -169,15 +180,15 @@ public class Participante {
         return createdAt;
     }
 
-    public void setcreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Timestamp getupdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setupdatedAt(Timestamp updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -193,8 +204,9 @@ public class Participante {
                 ", celular='" + celular + '\'' +
                 ", sexo='" + sexo + '\'' +
                 ", email='" + email + '\'' +
-                ", tiposervicio_id=" + tiposervicio +
-                ", curso='" + curso + '\'' +
+                ", tiposervicio=" + tiposervicio +
+                ", empresa=" + empresa +
+                ", curso=" + curso +
                 ", tratDatos='" + tratDatos + '\'' +
                 ", estado='" + estado + '\'' +
                 ", createdAt=" + createdAt +

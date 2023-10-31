@@ -128,16 +128,16 @@ public class ParticipanteImpl implements ParticipantePersistence {
     @Override
     public Object update(Participante participante) {
         Participante actualParticipante = getParticipanteById(participante.getId());
-        actualParticipante.settipoDocumento(participante.gettipoDocumento());
+        actualParticipante.setTipoDocumento(participante.getTipoDocumento());
         actualParticipante.setCedula(participante.getCedula());
         actualParticipante.setCelular(participante.getCelular());
         actualParticipante.setSexo(participante.getSexo());
         actualParticipante.setEmail(participante.getEmail());
         actualParticipante.setTiposervicio(participante.getTiposervicio());
         actualParticipante.setCurso(participante.getCurso());
-        actualParticipante.settratDatos(participante.gettratDatos());
+        actualParticipante.setTratDatos(participante.getTratDatos());
         actualParticipante.setEstado(participante.getEstado());
-        actualParticipante.setupdatedAt(participante.getCreatedAt());
+        actualParticipante.setUpdatedAt(participante.getCreatedAt());
         return participanteRepository.save(actualParticipante);
     }
 
