@@ -74,4 +74,24 @@ public class VisitanteCursoService {
         }
         return  cursoInforme;
     }
+
+    public List<Object> findBetween(Timestamp start, Timestamp end) {
+        List<Curso> cursos = cursoImpl.getCursos();
+
+        List<Object> response = new ArrayList<Object>();
+        List<String> servicios = new ArrayList<String>();
+        List<Integer> cantidad = new ArrayList<Integer>();
+        Integer cuantos;
+        for (Curso curso: cursos){
+            System.out.println(curso.getCodigo());
+            List<VisitanteCurso> visitanteCursos = visitanteCursoImpl.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(start,end,curso.getCodigo());
+            cuantos = visitanteCursos.size();
+            System.out.println(visitanteCursos.size());
+            servicios.add(curso.getNombre()+": "+cuantos);
+            cantidad.add(cuantos);
+        }
+        response.add(servicios);
+        response.add(cantidad);
+        return response;
+    }
 }

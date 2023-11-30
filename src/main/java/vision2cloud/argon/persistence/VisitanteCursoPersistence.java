@@ -17,5 +17,4 @@ public interface VisitanteCursoPersistence {
     List<VisitanteCurso> findByDiaInicioBetweenOrDiaFinBetween(Timestamp start, Timestamp end);
     List<VisitanteCurso> findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(Timestamp start, Timestamp end, String codigo);
 
-
 }

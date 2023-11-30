@@ -14,6 +14,6 @@ public interface VistanteCursoRepository extends JpaRepository<VisitanteCurso,Lo
 
     List<VisitanteCurso> findByDiaInicioBetweenOrDiaFinBetween(Timestamp startInicio, Timestamp endInicio, Timestamp startFin, Timestamp endFin);
 
-    List<VisitanteCurso> findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(String codigo, Timestamp startInicio, Timestamp endInicio, Timestamp startFin, Timestamp endFin);
+    List<VisitanteCurso> findByCursoCodigoLikeAndDiaInicioBetweenOrCursoCodigoLikeAndDiaFinBetween(String codigo1, Timestamp startInicio, Timestamp endInicio, String codigo2,  Timestamp startFin, Timestamp endFin);
 
 }

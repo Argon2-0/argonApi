@@ -31,8 +31,6 @@ public class Participante {
     private TipoServicio tiposervicio;
     @ManyToOne
     private Empresa empresa;
-    @Column(name = "curso")
-    private Long curso;
     @Column(name = "tratDatos")
     private String tratDatos;
     @Column(name = "estado")
@@ -45,7 +43,7 @@ public class Participante {
     public Participante() {
     }
 
-    public Participante(Long id, String tipoDocumento, Long cedula, String nombres, String apellidos, Timestamp fechaNacimiento, String celular, String sexo, String email, TipoServicio tiposervicio, Empresa empresa, Long curso, String tratDatos, String estado, Timestamp createdAt, Timestamp updatedAt) {
+    public Participante(Long id, String tipoDocumento, Long cedula, String nombres, String apellidos, Timestamp fechaNacimiento, String celular, String sexo, String email, TipoServicio tiposervicio, Empresa empresa,String tratDatos, String estado, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.tipoDocumento = tipoDocumento;
         this.cedula = cedula;
@@ -57,7 +55,6 @@ public class Participante {
         this.email = email;
         this.tiposervicio = tiposervicio;
         this.empresa = empresa;
-        this.curso = curso;
         this.tratDatos = tratDatos;
         this.estado = estado;
         this.createdAt = createdAt;
@@ -152,14 +149,6 @@ public class Participante {
         this.empresa = empresa;
     }
 
-    public Long getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Long curso) {
-        this.curso = curso;
-    }
-
     public String getTratDatos() {
         return tratDatos;
     }
@@ -206,7 +195,6 @@ public class Participante {
                 ", email='" + email + '\'' +
                 ", tiposervicio=" + tiposervicio +
                 ", empresa=" + empresa +
-                ", curso=" + curso +
                 ", tratDatos='" + tratDatos + '\'' +
                 ", estado='" + estado + '\'' +
                 ", createdAt=" + createdAt +
