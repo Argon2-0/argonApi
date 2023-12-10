@@ -35,18 +35,19 @@ public class UserController {
     public ResponseEntity<?> create(@RequestBody User user) {
         try {
             //obtener datos que se enviarán a través del API
-            /*String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
+            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
             long milisLastTime = Long.parseLong(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
             Timestamp lastTime = new Timestamp(milisLastTime);
             long milisCurrentTime = Long.parseLong(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
             Timestamp currentTime = new Timestamp(milisCurrentTime);
-            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);*/
+            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
             user.setPassword(bCryptPasswordEncoder.encode(Decrypt.desEncrypt(user.getPassword())));
             //obtener datos que se enviarán a través del API
-            if(true){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
-                response.add( "respuesta.get(1)");
+                response.add( respuesta.get(1));
                 response.add(userService.create(user));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
@@ -70,7 +71,8 @@ public class UserController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(userService.createMasive(users));
@@ -95,7 +97,8 @@ public class UserController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(userService.getUsers());
@@ -120,7 +123,8 @@ public class UserController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(userService.getUserById(id));
@@ -145,8 +149,11 @@ public class UserController {
             Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            user.setPassword(bCryptPasswordEncoder.encode(Decrypt.desEncrypt(user.getPassword())));
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(userService.update(user));

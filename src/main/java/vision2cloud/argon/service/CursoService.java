@@ -24,6 +24,9 @@ public class CursoService {
     public List<Curso> getCursos() {
         return cursoImpl.getCursos();
     }
+    public List<Curso> getCursosByDisponible(String disponible) {
+        return cursoImpl.getCursosByDisponible(disponible);
+    }
 
     public Curso findByCodigoLike(String codigo) {
         return cursoImpl.findByCodigoLike(codigo);

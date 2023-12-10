@@ -18,19 +18,19 @@ public class TipoServicio {
     private Timestamp createdAt;
     @Column(name = "updatedAt")
     private Timestamp updatedAt;
-    @Column(name = "form")
-    private String form;
+    @Column(name = "disponible")
+    private String disponible;
 
     public TipoServicio() {
     }
 
-    public TipoServicio(long id, String nombre, String descripcion, Timestamp createdAt, Timestamp updatedAt, String form) {
+    public TipoServicio(long id, String nombre, String descripcion, Timestamp createdAt, Timestamp updatedAt, String disponible) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.form = form;
+        this.disponible = disponible;
     }
 
     public long getId() {
@@ -73,12 +73,12 @@ public class TipoServicio {
         this.updatedAt = updatedAt;
     }
 
-    public String getForm() {
-        return form;
+    public String getDisponible() {
+        return disponible;
     }
 
-    public void setForm(String form) {
-        this.form = form;
+    public void setDisponible(String disponible) {
+        this.disponible = disponible;
     }
 
     @Override
@@ -89,7 +89,7 @@ public class TipoServicio {
                 ", descripcion='" + descripcion + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                ", form='" + form + '\'' +
+                ", disponible='" + disponible + '\'' +
                 '}';
     }
 }

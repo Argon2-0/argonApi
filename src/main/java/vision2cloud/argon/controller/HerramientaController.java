@@ -42,7 +42,8 @@ public class HerramientaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(herramientaService.create(herramienta));
@@ -72,7 +73,8 @@ public class HerramientaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(herramientaService.createMasive(herramientas));
@@ -96,7 +98,8 @@ public class HerramientaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(herramientaService.getHerramientas());
@@ -121,11 +124,46 @@ public class HerramientaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 List<String> herramientasResponse = new ArrayList<>();
                 List<Herramienta> herramientas = herramientaService.getHerramientas();
+                for (Herramienta herramienta: herramientas) {
+                    if(!herramientasResponse.contains(herramienta.getMarca())){
+                        herramientasResponse.add(herramienta.getMarca());
+                    }
+                }
+                response.add(herramientasResponse);
+                return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+            }
+            return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
+        } catch (Exception ex) {
+            Logger.getLogger(HerramientaController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @RequestMapping(value = "/getAllByDisponible/{estado}",method = RequestMethod.GET)
+    public ResponseEntity<?> getAllByDisponible(@PathVariable("estado") String estado) {
+        try {
+            //obtener datos que se enviarán a través del API
+            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
+            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
+            Timestamp lastTime = new Timestamp(milisLastTime);
+            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
+            Timestamp currentTime = new Timestamp(milisCurrentTime);
+            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            //obtener datos que se enviarán a través del API
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
+                ArrayList<Object> response = new ArrayList<Object>();
+                response.add( respuesta.get(1));
+                List<String> herramientasResponse = new ArrayList<>();
+                List<Herramienta> herramientas = herramientaService.getHerramientasByDisponible(estado);
                 for (Herramienta herramienta: herramientas) {
                     if(!herramientasResponse.contains(herramienta.getMarca())){
                         herramientasResponse.add(herramienta.getMarca());
@@ -153,7 +191,8 @@ public class HerramientaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(herramientaService.getEstadosForDasboard());
@@ -178,7 +217,8 @@ public class HerramientaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(herramientaService.getHerramientaById(id));
@@ -204,7 +244,8 @@ public class HerramientaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(herramientaService.update(herramienta));
@@ -229,7 +270,8 @@ public class HerramientaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(herramientaService.findByCodigoBarras(codigo_barras));

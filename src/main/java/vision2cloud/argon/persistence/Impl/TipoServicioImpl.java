@@ -28,18 +28,18 @@ public class TipoServicioImpl implements TipoServicioPersistence {
     }
 
     @Override
+    public List<TipoServicio> getTiposServiciosByDisponible(String disponible) {
+        return tipoServicioRepository.findByDisponibleLike(disponible);
+    }
+
+    @Override
     public TipoServicio getTipoServicioById(long id) {
         return tipoServicioRepository.findById(Math.toIntExact(id)).get();
     }
 
     @Override
     public Object update(TipoServicio tipoServicio) {
-        TipoServicio actualTipoServicio = getTipoServicioById(tipoServicio.getId());
-        actualTipoServicio.setNombre(tipoServicio.getNombre());
-        actualTipoServicio.setDescripcion(tipoServicio.getDescripcion());
-        actualTipoServicio.setupdatedAt(tipoServicio.getupdatedAt());
-        actualTipoServicio.setForm(tipoServicio.getForm());
-        return tipoServicioRepository.save(actualTipoServicio);
+        return tipoServicioRepository.save(tipoServicio);
     }
 
     @Override

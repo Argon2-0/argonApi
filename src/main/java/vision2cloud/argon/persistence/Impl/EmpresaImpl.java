@@ -30,6 +30,11 @@ public class EmpresaImpl implements EmpresaPersistence {
     }
 
     @Override
+    public List<Empresa> getEmpresasByDisponible(String disponible) {
+        return empresaRepository.findByDisponibleLike(disponible);
+    }
+
+    @Override
     public Empresa getEmpresaByNit(int nit) {
         List<Empresa> empresas = empresaRepository.findAll();
         for (Empresa empresa: empresas){
@@ -42,9 +47,7 @@ public class EmpresaImpl implements EmpresaPersistence {
 
     @Override
     public Object update(Empresa empresa) {
-        Empresa actualEmpresa = getEmpresaByNit(empresa.getNit());
-        actualEmpresa.setNombre(empresa.getNombre());
-        return empresaRepository.save(actualEmpresa);
+        return empresaRepository.save(empresa);
     }
 
     @Override

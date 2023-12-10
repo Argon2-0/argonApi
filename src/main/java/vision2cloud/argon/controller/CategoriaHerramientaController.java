@@ -43,7 +43,8 @@ public class CategoriaHerramientaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(categoriaHerramientaService.create(categoriaHerramienta));
@@ -68,7 +69,8 @@ public class CategoriaHerramientaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(categoriaHerramientaService.getCategoriasHerramientas());
@@ -93,7 +95,8 @@ public class CategoriaHerramientaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(categoriaHerramientaService.getCategoriaHerramientaById(id));
@@ -119,7 +122,8 @@ public class CategoriaHerramientaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(categoriaHerramientaService.update(categoriaHerramienta));

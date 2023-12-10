@@ -1,5 +1,7 @@
 package vision2cloud.argon.controller;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import vision2cloud.argon.controller.user.auth.AuthService;
 import vision2cloud.argon.model.Empresa;
 import vision2cloud.argon.model.Item;
+import vision2cloud.argon.model.Role;
 import vision2cloud.argon.model.TipoServicio;
 import vision2cloud.argon.service.EmpresaService;
 
@@ -17,6 +20,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static vision2cloud.argon.model.user.Auth.Constants.CLAIMS_ROLES_KEY;
+import static vision2cloud.argon.model.user.Auth.Constants.SECRET_KEY;
 
 @RestController
 @RequestMapping( "/accessbiosecurity/empresa")
@@ -41,7 +47,8 @@ public class EmpresaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(empresaService.create(empresa));
@@ -66,12 +73,38 @@ public class EmpresaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(empresaService.getEmpresas());
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
+            }
+            return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
+        } catch (Exception ex) {
+            Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/getAllByDisponible/{estado}",method = RequestMethod.GET)
+    public ResponseEntity<?> getEmpresasByDisponible(@PathVariable("estado") String estado) {
+        try {
+            //obtener datos que se enviarán a través del API
+            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
+            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
+            Timestamp lastTime = new Timestamp(milisLastTime);
+            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
+            Timestamp currentTime = new Timestamp(milisCurrentTime);
+            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            //obtener datos que se enviarán a través del API
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
+                ArrayList<Object> response = new ArrayList<Object>();
+                response.add(respuesta.get(1));
+                response.add(empresaService.getEmpresasByDisponible(estado));
+                return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
             }
             return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
         } catch (Exception ex) {
@@ -91,7 +124,8 @@ public class EmpresaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(empresaService.getEmpresaByNit(nit));
@@ -117,7 +151,8 @@ public class EmpresaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || (rolId.equals("3") && empresaService.getEmpresaByNit(empresa.getNit()).getDisponible().equals(empresa.getDisponible())))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(empresaService.update(empresa));
@@ -143,7 +178,8 @@ public class EmpresaController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(empresaService.createMasive(empresa));

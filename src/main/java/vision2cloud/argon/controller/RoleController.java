@@ -41,7 +41,8 @@ public class RoleController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(roleService.create(role));
@@ -66,7 +67,8 @@ public class RoleController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(roleService.getRoles());
@@ -91,7 +93,8 @@ public class RoleController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(roleService.getRoleById(id));
@@ -117,7 +120,8 @@ public class RoleController {
             Timestamp currentTime = new Timestamp(milisCurrentTime);
             ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
             //obtener datos que se enviarán a través del API
-            if(Boolean.parseBoolean(respuesta.get(0))){
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(roleService.update(role));

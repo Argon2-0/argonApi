@@ -34,14 +34,8 @@ public class UserImpl implements UserPersistence {
 
     @Override
     public Object update(User user) {
-        User actualUser = getUserById(user.getId());
-        actualUser.setName(user.getName());
-        actualUser.setEmail(user.getEmail());
-        actualUser.setemailVerifiedAt(user.getemailVerifiedAt());
+        User actualUser = userRepository.getById(user.getId());
         actualUser.setPassword(user.getPassword());
-        actualUser.setPicture(user.getPicture());
-        actualUser.setRole(user.getRole());
-        actualUser.setrememberToken(user.getrememberToken());
         actualUser.setupdatedAt(user.getupdatedAt());
         return userRepository.save(actualUser);
     }

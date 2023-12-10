@@ -24,6 +24,9 @@ public class EmpresaService {
     public List<Empresa> getEmpresas() {
         return empresaImpl.getEmpresas();
     }
+    public List<Empresa> getEmpresasByDisponible(String disponible) {
+        return empresaImpl.getEmpresasByDisponible(disponible);
+    }
 
     public Empresa getEmpresaByNit(int nit) {
         return empresaImpl.getEmpresaByNit(nit);

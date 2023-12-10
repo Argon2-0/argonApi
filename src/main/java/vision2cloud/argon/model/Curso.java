@@ -14,13 +14,15 @@ public class Curso {
     private String codigo;
     @Column(name = "nombre")
     private String nombre;
-
+    @Column(name = "disponible")
+    private String disponible;
     public Curso() {
     }
 
-    public Curso(String codigo, String nombre) {
+    public Curso(String codigo, String nombre, String disponible) {
         this.codigo = codigo;
         this.nombre = nombre;
+        this.disponible = disponible;
     }
 
     public String getCodigo() {
@@ -39,11 +41,20 @@ public class Curso {
         this.nombre = nombre;
     }
 
+    public String getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(String disponible) {
+        this.disponible = disponible;
+    }
+
     @Override
     public String toString() {
-        return "Codigo{" +
-                "codigo=" + codigo +
+        return "Curso{" +
+                "codigo='" + codigo + '\'' +
                 ", nombre='" + nombre + '\'' +
+                ", disponible='" + disponible + '\'' +
                 '}';
     }
 }

@@ -11,13 +11,15 @@ public class Empresa {
     private int nit;
     @Column(name = "nombre")
     private String nombre;
-
+    @Column(name = "disponible")
+    private String disponible;
     public Empresa() {
     }
 
-    public Empresa(int nit, String nombre) {
+    public Empresa(int nit, String nombre, String disponible) {
         this.nit = nit;
         this.nombre = nombre;
+        this.disponible = disponible;
     }
 
     public int getNit() {
@@ -36,11 +38,20 @@ public class Empresa {
         this.nombre = nombre;
     }
 
+    public String getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(String disponible) {
+        this.disponible = disponible;
+    }
+
     @Override
     public String toString() {
         return "Empresa{" +
                 "nit=" + nit +
                 ", nombre='" + nombre + '\'' +
+                ", disponible='" + disponible + '\'' +
                 '}';
     }
 }

@@ -5,7 +5,8 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "herramientas")
-public class Herramienta {
+public class
+Herramienta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,10 +30,13 @@ public class Herramienta {
     @Column(name = "updatedAt")
     private Timestamp updatedAt;
 
+    @Column(name = "disponible")
+    private String disponible;
+
     public Herramienta() {
     }
 
-    public Herramienta(Long id, String nombre, String descripcion, String marca, String serial, String codigoBarras, String estado, Participante participante, Timestamp createdAt, Timestamp updatedAt) {
+    public Herramienta(Long id, String nombre, String descripcion, String marca, String serial, String codigoBarras, String estado, Participante participante, Timestamp createdAt, Timestamp updatedAt, String disponible) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -43,6 +47,7 @@ public class Herramienta {
         this.participante = participante;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.disponible = disponible;
     }
 
     public Long getId() {
@@ -73,24 +78,12 @@ public class Herramienta {
         return marca;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
     public String getSerial() {
         return serial;
     }
 
     public void setSerial(String serial) {
         this.serial = serial;
-    }
-
-    public String getcodigoBarras() {
-        return codigoBarras;
-    }
-
-    public void setcodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
     }
 
     public String getEstado() {
@@ -125,9 +118,26 @@ public class Herramienta {
         this.updatedAt = updatedAt;
     }
 
+    public String getCodigoBarras() {
+        return codigoBarras;
+    }
+
+    public void setCodigoBarras(String codigoBarras) {
+        this.codigoBarras = codigoBarras;
+    }
+
+
+    public String getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(String disponible) {
+        this.disponible = disponible;
+    }
+
     @Override
     public String toString() {
-        return "Herramientas{" +
+        return "Herramienta{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +
@@ -135,9 +145,10 @@ public class Herramienta {
                 ", serial='" + serial + '\'' +
                 ", codigoBarras='" + codigoBarras + '\'' +
                 ", estado='" + estado + '\'' +
-                ", participante_id=" + participante +
+                ", participante=" + participante +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", disponible='" + disponible + '\'' +
                 '}';
     }
 }

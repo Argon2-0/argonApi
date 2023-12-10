@@ -9,6 +9,7 @@ import java.util.List;
 public interface EmpresaPersistence {
     Object create(Empresa item);
     List<Empresa> getEmpresas();
+    List<Empresa> getEmpresasByDisponible(String disponible);
     Empresa getEmpresaByNit(int nit);
     Object update(Empresa item);
 

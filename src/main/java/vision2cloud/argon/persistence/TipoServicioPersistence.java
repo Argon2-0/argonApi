@@ -9,6 +9,7 @@ import java.util.List;
 public interface TipoServicioPersistence {
     Object create(TipoServicio tipoServicio);
     List<TipoServicio> getTiposServicios();
+    List<TipoServicio> getTiposServiciosByDisponible(String disponible);
     TipoServicio getTipoServicioById(long id);
     Object update(TipoServicio tipoServicio);
     Object createMasive(ArrayList<TipoServicio> tiposServicio);

@@ -30,6 +30,10 @@ public class HerramientaService {
         return herramientaImpl.getHerramientas();
     }
 
+    public List<Herramienta> getHerramientasByDisponible(String disponible) {
+        return herramientaImpl.getHerramientasByDisponible(disponible);
+    }
+
     public Herramienta getHerramientaById(long id) {
         return herramientaImpl.getHerramientaById(id);
     }

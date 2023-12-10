@@ -22,6 +22,9 @@ public class TipoServicioService {
     public List<TipoServicio> getTiposServicios() {
         return tipoServicioImpl.getTiposServicios();
     }
+    public List<TipoServicio> getTiposServiciosByDisponible(String disponible) {
+        return tipoServicioImpl.getTiposServiciosByDisponible(disponible);
+    }
 
     public TipoServicio getTipoServicioById(long id) {
         return tipoServicioImpl.getTipoServicioById(id);

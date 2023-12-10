@@ -10,6 +10,7 @@ import java.util.List;
 public interface HerramientaPersistence {
     Object create(Herramienta herramienta);
     List<Herramienta> getHerramientas();
+    List<Herramienta> getHerramientasByDisponible(String disponible);
     Herramienta getHerramientaById(long id);
     Object update(Herramienta herramienta);
     Herramienta findByCodigoBarras(String codigo_barras);

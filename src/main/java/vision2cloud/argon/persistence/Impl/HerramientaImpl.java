@@ -30,19 +30,18 @@ public class HerramientaImpl implements HerramientaPersistence {
     }
 
     @Override
+    public List<Herramienta> getHerramientasByDisponible(String disponible) {
+        return herramientaRepository.findByDisponibleLike(disponible);
+    }
+
+    @Override
     public Herramienta getHerramientaById(long id) {
         return herramientaRepository.findById(Math.toIntExact(id)).get();
     }
 
     @Override
     public Object update(Herramienta herramienta) {
-        Herramienta actualHerramienta = getHerramientaById(herramienta.getId());
-        actualHerramienta.setNombre(herramienta.getNombre());
-        actualHerramienta.setDescripcion(herramienta.getDescripcion());
-        actualHerramienta.setEstado(herramienta.getEstado());
-        actualHerramienta.setParticipante(herramienta.getParticipante());
-        actualHerramienta.setupdatedAt(herramienta.getupdatedAt());
-        return herramientaRepository.save(actualHerramienta);
+        return herramientaRepository.save(herramienta);
     }
 
     @Override
