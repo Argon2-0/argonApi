@@ -20,6 +20,7 @@
     <java.version>19</java.version>
   </properties>
 
+  <packaging>war</packaging>
   <dependencies>
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
