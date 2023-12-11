@@ -1,6 +1,5 @@
 package vision2cloud.argon.controller.user.auth;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.tomcat.util.codec.binary.Base64;

@@ -47,7 +47,7 @@ public class ParticipanteService {
     }
 
     public List<Participante> getParticipanteToday() {
-        LocalDate ld = LocalDate.now().minusYears(1).minusMonths(2);
+        LocalDate ld = LocalDate.now();
         Timestamp start = Timestamp.valueOf(ld.atStartOfDay());
         Timestamp end = Timestamp.valueOf(ld.plusDays(1).atStartOfDay());
         return participanteImpl.getParticipanteBetween(start, end);
