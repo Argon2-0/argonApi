@@ -20,7 +20,7 @@
     <java.version>19</java.version>
   </properties>
 
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <dependencies>
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
@@ -119,7 +119,12 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-tomcat</artifactId>
-      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.tomcat.embed</groupId>
+          <artifactId>tomcat-embed-jasper</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -269,7 +274,7 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>argonapi</finalName>
+    <finalName>ArgonApi</finalName>
     <plugins>
 
       <plugin>
