@@ -7,13 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import vision2cloud.argon.service.validaciones.Validaciones;
 import vision2cloud.argon.controller.CategoriaHerramientaController;
 import vision2cloud.argon.controller.user.auth.AuthService;
 import vision2cloud.argon.model.zkt.Person;
-import vision2cloud.argon.service.TipoServicioService;
 import vision2cloud.argon.service.zkt.PersonService;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,20 +25,17 @@ public class PersonController {
     PersonService personService;
 
     @Autowired
-    @Qualifier("AuthService")
-    AuthService authService;
+    @Qualifier("Validaciones")
+    Validaciones validaciones;
 
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> create(@RequestBody Person person) {
         try {
             //obtener datos que se enviarán a través del API
-            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
-            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
-            Timestamp lastTime = new Timestamp(milisLastTime);
-            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
-            Timestamp currentTime = new Timestamp(milisCurrentTime);
-            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            ArrayList<String> respuesta = validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
@@ -61,12 +57,9 @@ public class PersonController {
     public ResponseEntity<?> update(@PathVariable("pin") String pin) {
         try {
             //obtener datos que se enviarán a través del API
-            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
-            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
-            Timestamp lastTime = new Timestamp(milisLastTime);
-            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
-            Timestamp currentTime = new Timestamp(milisCurrentTime);
-            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
@@ -88,12 +81,9 @@ public class PersonController {
     public ResponseEntity<?> createMasive(@RequestBody ArrayList<Person> persons) {
         try {
             //obtener datos que se enviarán a través del API
-            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
-            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
-            Timestamp lastTime = new Timestamp(milisLastTime);
-            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
-            Timestamp currentTime = new Timestamp(milisCurrentTime);
-            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){

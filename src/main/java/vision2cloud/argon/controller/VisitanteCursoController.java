@@ -7,11 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import vision2cloud.argon.service.validaciones.Validaciones;
 import vision2cloud.argon.controller.user.auth.AuthService;
-import vision2cloud.argon.model.Curso;
 import vision2cloud.argon.model.RegistroCurso;
 import vision2cloud.argon.model.VisitanteCurso;
-import vision2cloud.argon.service.CursoService;
 import vision2cloud.argon.service.VisitanteCursoService;
 
 import java.sql.Timestamp;
@@ -27,8 +26,8 @@ public class VisitanteCursoController {
     VisitanteCursoService visitanteCursoService;
 
     @Autowired
-    @Qualifier("AuthService")
-    AuthService authService;
+    @Qualifier("Validaciones")
+    Validaciones validaciones;
 
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     @ResponseBody
@@ -36,12 +35,9 @@ public class VisitanteCursoController {
         try {
             System.out.println(visitanteCurso.toString());
             //obtener datos que se enviarán a través del API
-            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
-            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
-            Timestamp lastTime = new Timestamp(milisLastTime);
-            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
-            Timestamp currentTime = new Timestamp(milisCurrentTime);
-            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            ArrayList<String> respuesta = validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
@@ -62,12 +58,9 @@ public class VisitanteCursoController {
     public ResponseEntity<?> getCursoss() {
         try {
             //obtener datos que se enviarán a través del API
-            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
-            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
-            Timestamp lastTime = new Timestamp(milisLastTime);
-            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
-            Timestamp currentTime = new Timestamp(milisCurrentTime);
-            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
@@ -88,12 +81,9 @@ public class VisitanteCursoController {
     public ResponseEntity<?> getCursoByCodigo(@PathVariable("codigo") long id) {
         try {
             //obtener datos que se enviarán a través del API
-            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
-            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
-            Timestamp lastTime = new Timestamp(milisLastTime);
-            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
-            Timestamp currentTime = new Timestamp(milisCurrentTime);
-            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
@@ -115,12 +105,9 @@ public class VisitanteCursoController {
     public ResponseEntity<?> update(@RequestBody VisitanteCurso visitanteCurso) {
         try {
             //obtener datos que se enviarán a través del API
-            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
-            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
-            Timestamp lastTime = new Timestamp(milisLastTime);
-            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
-            Timestamp currentTime = new Timestamp(milisCurrentTime);
-            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
@@ -142,12 +129,9 @@ public class VisitanteCursoController {
     public ResponseEntity<?> createMasive(@RequestBody ArrayList<RegistroCurso> visitantesCursos) {
         try {
             //obtener datos que se enviarán a través del API
-            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
-            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
-            Timestamp lastTime = new Timestamp(milisLastTime);
-            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
-            Timestamp currentTime = new Timestamp(milisCurrentTime);
-            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
@@ -169,12 +153,9 @@ public class VisitanteCursoController {
         System.out.println("aassssdasfasfafasfa");
         try {
             //obtener datos que se enviarán a través del API
-            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
-            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
-            Timestamp lastTime = new Timestamp(milisLastTime);
-            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
-            Timestamp currentTime = new Timestamp(milisCurrentTime);
-            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
@@ -197,12 +178,9 @@ public class VisitanteCursoController {
         System.out.println("aassssdasfasfafasfa");
         try {
             //obtener datos que se enviarán a través del API
-            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
-            Long milisLastTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime"));
-            Timestamp lastTime = new Timestamp(milisLastTime);
-            Long milisCurrentTime = Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime"));
-            Timestamp currentTime = new Timestamp(milisCurrentTime);
-            ArrayList<String> respuesta = authService.VerificateToken(token, lastTime, currentTime);
+            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
