@@ -22,9 +22,6 @@ public class Validaciones {
     }
 
     public Boolean IpValidation(String ip){
-        System.out.println("--------------------");
-        System.out.println(ip);
-        System.out.println("186.86.32.92".equals(ip));
-        return "186.86.32.92".equals(ip);
+        return "201.184.62.170".equals(ip);
     }
 }

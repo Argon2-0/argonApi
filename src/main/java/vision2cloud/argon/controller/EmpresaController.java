@@ -80,7 +80,7 @@ public class EmpresaController {
         try {
             ArrayList<String> respuesta = new ArrayList<>( Arrays.asList("false", "") );
             boolean ipautorizada = false;
-            if(validaciones.IpValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("xForwardedFor"))){
+            if(validaciones.IpValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getRemoteAddr())){
                 ipautorizada = true;
             }else {
                 //obtener datos que se enviarán a través del API
