@@ -15,6 +15,7 @@ vision2cloud\argon\controller\user\auth\AuthService.class
 vision2cloud\argon\controller\user\UserController.class
 vision2cloud\argon\persistence\TipoUsuarioPersistence.class
 vision2cloud\argon\persistence\Impl\ParticipanteImpl.class
+vision2cloud\argon\service\validaciones\Validaciones.class
 vision2cloud\argon\service\MigrationService.class
 vision2cloud\argon\config\SecurityConfiguration.class
 vision2cloud\argon\repository\CursoRepository.class

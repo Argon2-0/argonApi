@@ -80,6 +80,7 @@ G:\Santiago\argonApi\src\main\java\vision2cloud\argon\persistence\user\UserLogin
 G:\Santiago\argonApi\src\main\java\vision2cloud\argon\repository\CategoriaHerramientaRepository.java
 G:\Santiago\argonApi\src\main\java\vision2cloud\argon\repository\ParticipanteRepository.java
 G:\Santiago\argonApi\src\main\java\vision2cloud\argon\service\user\UserService.java
+G:\Santiago\argonApi\src\main\java\vision2cloud\argon\service\validaciones\Validaciones.java
 G:\Santiago\argonApi\src\main\java\vision2cloud\argon\persistence\TagPersistence.java
 G:\Santiago\argonApi\src\main\java\vision2cloud\argon\model\zkt\ResponseTransaction.java
 G:\Santiago\argonApi\src\main\java\vision2cloud\argon\persistence\Impl\ItemTagImpl.java

@@ -19,9 +19,4 @@ public class argonApp extends SpringBootServletInitializer {
             System.out.println(e);
         }
     }
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
-        return application.sources(argonApp.class);
-    }
-
 }
