@@ -15,8 +15,11 @@ import vision2cloud.argon.model.zkt.Transaction;
 import vision2cloud.argon.persistence.zkt.TransactionPersistence;
 
 import java.net.URISyntaxException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
-import java.util.Objects;
+
+import javax.net.ssl.*;
 
 @Service("TransactionImpl")
 public class TransactionImpl implements TransactionPersistence {
@@ -25,18 +28,47 @@ public class TransactionImpl implements TransactionPersistence {
     private String accLevelId = "8a8080887dc2880f017e06d4c68e2b05";
     private String dptCode = "16";
 
-    private HttpHeaders CreateHttpHeaders() {
+    private HttpHeaders createHttpHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
         return httpHeaders;
     }
+
     @Override
     public ArrayList<Transaction> get(String initalDate, String endDate) throws URISyntaxException {
         try {
             System.out.println("GrabarPerson");
+
+            // Crear un TrustManager que no realiza ninguna verificación
+            TrustManager[] trustAllCerts = new TrustManager[] {
+                    new X509TrustManager() {
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
+
+                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                            // No implementation needed, accept all clients
+                        }
+
+                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                            // No implementation needed, accept all servers
+                        }
+                    }
+            };
+
+            // Configurar SSLContext para confiar en todos los certificados
+            SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+            // Crear un HostnameVerifier que siempre retorna true
+            HostnameVerifier allHostsValid = (hostname, session) -> true;
+            // Instalar el HostnameVerifier personalizado
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+
             final Gson gson = new Gson();
             RestTemplate restTemplate = new RestTemplate();
-            HttpEntity<?> requestEntity = new HttpEntity<>(CreateHttpHeaders());
+            HttpEntity<?> requestEntity = new HttpEntity<>(createHttpHeaders());
             String urlTemplate = UriComponentsBuilder.fromHttpUrl(basicUri + "transaction/list" )
                     .queryParam("pageNo", 1)
                     .queryParam("pageSize", 1000)
@@ -46,15 +78,13 @@ public class TransactionImpl implements TransactionPersistence {
             System.out.println(urlTemplate);
             ResponseEntity<ResponseTransaction> response = restTemplate.exchange(
                     urlTemplate, HttpMethod.GET, requestEntity, ResponseTransaction.class);
-            ArrayList<Transaction> transaction = Objects.requireNonNull(response.getBody()).getData();
+            ArrayList<Transaction> transaction = response.getBody().getData();
             System.out.println("A grabar");
             System.out.println("grabo");
             System.out.println(transaction);
-            //return response.getBody();
             return transaction;
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage()); ;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         return null;
     }
