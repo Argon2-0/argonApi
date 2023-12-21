@@ -243,31 +243,6 @@ public class ParticipanteController {
         }
     }
 
-
-
-    @RequestMapping(value = "/countByEdad/{start}/{end}",method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<?> countByEdad(@PathVariable("start") Long start, @PathVariable("end") Long end) {
-        try {
-            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
-                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
-                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
-            //obtener datos que se enviarán a través del API
-            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
-            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
-                ArrayList<Object> response = new ArrayList<Object>();
-                response.add( respuesta.get(1));
-                response.add(participanteService.countByEdadAndCreatedAtBetween(new Timestamp(start), new Timestamp(end)));
-                return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-
-            }
-            return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
-        } catch (Exception ex) {
-            Logger.getLogger(ParticipanteController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @RequestMapping(value = "/countBySexo/{start}/{end}",method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> findBySexoLike(@PathVariable("start") Long start, @PathVariable("end") Long end) {
