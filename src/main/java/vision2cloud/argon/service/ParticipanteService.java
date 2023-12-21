@@ -26,13 +26,24 @@ public class ParticipanteService {
 
     public Object create(Participante participante) {
         try{
+            System.out.println("-----------------");
+            System.out.println("services");
             Participante participante1 = findByTipoDocumentoAndCedulaLike(participante.getTipoDocumento(), participante.getCedula());
             System.out.println(participante1);
             if(participante1 != null) {
+                System.out.println("-----------------");
+                System.out.println("update");
                 participante.setId(participante1.getId());
+                return participanteImpl.update(participante);
+            }else{
+                System.out.println("-----------------");
+                System.out.println("create");
+                return participanteImpl.create(participante);
             }
-            return participanteImpl.update(participante);
+
         }catch (Exception e){
+            System.out.println("-----------------");
+            System.out.println("exception");
             return participanteImpl.create(participante);
         }
     }

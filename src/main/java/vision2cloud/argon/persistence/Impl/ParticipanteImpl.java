@@ -23,6 +23,8 @@ public class ParticipanteImpl implements ParticipantePersistence {
 
     @Override
     public Object create(Participante participante) {
+        System.out.println("-----------------");
+        System.out.println("repesotory create");
         return participanteRepository.save(participante);
     }
 
@@ -86,6 +88,8 @@ public class ParticipanteImpl implements ParticipantePersistence {
 
     @Override
     public Object update(Participante participante) {
+        System.out.println("-----------------");
+        System.out.println("repesotory update");
         Participante actualParticipante = getParticipanteById(participante.getId());
         actualParticipante.setCelular(participante.getCelular());
         actualParticipante.setEmail(participante.getEmail());
