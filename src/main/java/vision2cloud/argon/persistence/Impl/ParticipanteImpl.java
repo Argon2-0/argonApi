@@ -68,36 +68,6 @@ public class ParticipanteImpl implements ParticipantePersistence {
         return response;
     }
 
-    public List<Object> countByEdadAndCreatedAtBetween(Timestamp start, Timestamp end) {
-        List<Object> response = new ArrayList<Object>();
-        List<String> servicios = new ArrayList<String>();
-        List<Integer> cantidad = new ArrayList<Integer>();
-        Integer cuantos;
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-
-        LocalDate hoy = LocalDate.now();
-        System.out.println(hoy);
-        System.out.println(hoy.minusYears(18));
-        cuantos = participanteRepository.findByFechaNacimientoBetweenAndCreatedAtBetween(Timestamp.valueOf(hoy.minusYears(18).atStartOfDay()),Timestamp.valueOf(hoy.atStartOfDay()), start, end).size();
-        servicios.add("Menores de 18 años: "+cuantos);
-        cantidad.add(cuantos);
-       cuantos = participanteRepository.findByFechaNacimientoBetweenAndCreatedAtBetween(Timestamp.valueOf(hoy.minusYears(26).atStartOfDay()),Timestamp.valueOf(hoy.minusYears(18).atStartOfDay()), start, end).size();
-        servicios.add("Entre 18 y 25 años: "+cuantos);
-        cantidad.add(cuantos);
-        cuantos = participanteRepository.findByFechaNacimientoBetweenAndCreatedAtBetween(Timestamp.valueOf(hoy.minusYears(41).atStartOfDay()),Timestamp.valueOf(hoy.minusYears(26).atStartOfDay()), start, end).size();
-        servicios.add("Entre 26 y 40 años: "+cuantos);
-        cantidad.add(cuantos);
-        cuantos = participanteRepository.findByFechaNacimientoBetweenAndCreatedAtBetween(Timestamp.valueOf(hoy.minusYears(61).atStartOfDay()),Timestamp.valueOf(hoy.minusYears(41).atStartOfDay()), start, end).size();
-        servicios.add("Entre 41 y 60 años: "+cuantos);
-        cantidad.add(cuantos);
-        cuantos = participanteRepository.findByFechaNacimientoGreaterThanEqualAndCreatedAtBetween(Timestamp.valueOf(hoy.minusYears(61).atStartOfDay()), start, end).size();
-        servicios.add("Mayores a 60 años: "+cuantos);
-        cantidad.add(cuantos);
-        response.add(servicios);
-        response.add(cantidad);
-        return response;
-    }
-
     public List<Object> findBySexoLikeAndCreatedAtBetween(Timestamp start, Timestamp end) {
         List<Object> response = new ArrayList<Object>();
         List<String> servicios = new ArrayList<String>();
