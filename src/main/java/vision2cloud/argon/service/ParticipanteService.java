@@ -27,7 +27,10 @@ public class ParticipanteService {
     public Object create(Participante participante) {
         try{
             Participante participante1 = findByTipoDocumentoAndCedulaLike(participante.getTipoDocumento(), participante.getCedula());
-            participante.setId(participante1.getId());
+            System.out.println(participante1);
+            if(participante1 != null) {
+                participante.setId(participante1.getId());
+            }
             return participanteImpl.update(participante);
         }catch (Exception e){
             return participanteImpl.create(participante);

@@ -46,6 +46,9 @@ public class ParticipanteController {
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if((Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3")))|| ipautorizada){
+                System.out.println("----------------");
+                System.out.println("controller");
+                System.out.println(participante);
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(participanteService.create(participante));
