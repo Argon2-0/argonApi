@@ -12,7 +12,9 @@ import vision2cloud.argon.model.zkt.ResponsePerson;
 import vision2cloud.argon.persistence.zkt.PersonPersistence;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.net.ssl.*;
 import java.net.URISyntaxException;
+import java.security.cert.X509Certificate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -32,22 +34,42 @@ public class PersonImpl implements PersonPersistence {
     @Override
     public Object create(Person person) throws URISyntaxException {
         try {
+            // Crear un TrustManager que no realiza ninguna verificación
+            TrustManager[] trustAllCerts = new TrustManager[] {
+                    new X509TrustManager() {
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
+
+                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                            // No implementation needed, accept all clients
+                        }
+
+                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                            // No implementation needed, accept all servers
+                        }
+                    }
+            };
+
+            // Configurar SSLContext para confiar en todos los certificados
+            SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+            // Crear un HostnameVerifier que siempre retorna true
+            HostnameVerifier allHostsValid = (hostname, session) -> true;
+            // Instalar el HostnameVerifier personalizado
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+
             person.setAccLevelIds(accLevelId);
             person.setDeptCode(dptCode);
-            System.out.println(new Date());
-            System.out.println("GrabarPerson");
             final Gson gson = new Gson();
             final String pedido = gson.toJson(person);
-            System.out.println(pedido);
             RestTemplate restTemplate = new RestTemplate();
             String urlTemplate = basicUri + "person/add?access_token=7A7CBAA816F05D6CCE07803766B5E9E0FAB6ACCB3B2DFB8CCC3FE490F987C2FC";
-            System.out.println("A grabar");
             HttpEntity<?> httpEntity = new HttpEntity<>(pedido, CreateHttpHeaders());
             ResponseEntity<String> response = restTemplate.postForEntity(urlTemplate, httpEntity, String.class);
-            System.out.println("grabo");
-            System.out.println(response);
             return true;
-            //return response.getBody();
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -58,7 +80,33 @@ public class PersonImpl implements PersonPersistence {
     @Override
     public Person get(String pin) throws URISyntaxException {
         try {
-            System.out.println("GrabarPerson");
+            // Crear un TrustManager que no realiza ninguna verificación
+            TrustManager[] trustAllCerts = new TrustManager[] {
+                    new X509TrustManager() {
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
+
+                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                            // No implementation needed, accept all clients
+                        }
+
+                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                            // No implementation needed, accept all servers
+                        }
+                    }
+            };
+
+            // Configurar SSLContext para confiar en todos los certificados
+            SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+            // Crear un HostnameVerifier que siempre retorna true
+            HostnameVerifier allHostsValid = (hostname, session) -> true;
+            // Instalar el HostnameVerifier personalizado
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+            
             final Gson gson = new Gson();
             RestTemplate restTemplate = new RestTemplate();
             HttpEntity<?> requestEntity = new HttpEntity<>(CreateHttpHeaders());
@@ -67,14 +115,9 @@ public class PersonImpl implements PersonPersistence {
                     .queryParam("access_token", token)
                     .encode()
                     .toUriString();
-            System.out.println(urlTemplate);
             ResponseEntity<ResponsePerson> response = restTemplate.exchange(
                     urlTemplate, HttpMethod.GET, requestEntity, ResponsePerson.class);
             Person person = Objects.requireNonNull(response.getBody()).getData();
-            System.out.println("A grabar");
-            System.out.println("grabo");
-            System.out.println(person);
-            //return response.getBody();
             return person;
         }
         catch (Exception e){

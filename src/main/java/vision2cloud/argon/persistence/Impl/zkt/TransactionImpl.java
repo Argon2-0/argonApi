@@ -75,16 +75,11 @@ public class TransactionImpl implements TransactionPersistence {
                     .queryParam("access_token", token)
                     .encode()
                     .toUriString();
-            System.out.println(urlTemplate);
             ResponseEntity<ResponseTransaction> response = restTemplate.exchange(
                     urlTemplate, HttpMethod.GET, requestEntity, ResponseTransaction.class);
             ArrayList<Transaction> transaction = response.getBody().getData();
-            System.out.println("A grabar");
-            System.out.println("grabo");
-            System.out.println(transaction);
             return transaction;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
         return null;
     }
