@@ -33,6 +33,11 @@ public class VisitanteCursoImpl implements VisitanteCursoPersistence {
     }
 
     @Override
+    public VisitanteCurso getByVisitanteId(Long id) {
+        return visitanteCursoRepository.getByVisitanteIdLike(id);
+    }
+
+    @Override
     public Object update(VisitanteCurso visitanteCurso) {
         VisitanteCurso actualVisitanteCurso = visitanteCursoRepository.getById(visitanteCurso.getId());
         actualVisitanteCurso.setCursoCodigo(visitanteCurso.getCursoCodigo());

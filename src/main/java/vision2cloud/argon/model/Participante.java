@@ -19,12 +19,8 @@ public class Participante {
     private String nombres;
     @Column(name = "apellidos")
     private String apellidos;
-    @Column(name = "fechaNacimiento")
-    private Timestamp fechaNacimiento;
     @Column(name = "celular")
     private String celular;
-    @Column(name = "sexo")
-    private String sexo;
     @Column(name = "email")
     private String email;
     @ManyToOne
@@ -43,15 +39,13 @@ public class Participante {
     public Participante() {
     }
 
-    public Participante(Long id, String tipoDocumento, Long cedula, String nombres, String apellidos, Timestamp fechaNacimiento, String celular, String sexo, String email, TipoServicio tiposervicio, Empresa empresa,String tratDatos, String estado, Timestamp createdAt, Timestamp updatedAt) {
+    public Participante(Long id, String tipoDocumento, Long cedula, String nombres, String apellidos, String celular,String email, TipoServicio tiposervicio, Empresa empresa,String tratDatos, String estado, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.tipoDocumento = tipoDocumento;
         this.cedula = cedula;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.fechaNacimiento = fechaNacimiento;
         this.celular = celular;
-        this.sexo = sexo;
         this.email = email;
         this.tiposervicio = tiposervicio;
         this.empresa = empresa;
@@ -96,19 +90,9 @@ public class Participante {
     public String getApellidos() {
         return apellidos;
     }
-
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
-
-    public Timestamp getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Timestamp fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
     public String getCelular() {
         return celular;
     }
@@ -116,15 +100,6 @@ public class Participante {
     public void setCelular(String celular) {
         this.celular = celular;
     }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -189,9 +164,7 @@ public class Participante {
                 ", cedula=" + cedula +
                 ", nombres='" + nombres + '\'' +
                 ", apellidos='" + apellidos + '\'' +
-                ", fechaNacimiento=" + fechaNacimiento +
                 ", celular='" + celular + '\'' +
-                ", sexo='" + sexo + '\'' +
                 ", email='" + email + '\'' +
                 ", tiposervicio=" + tiposervicio +
                 ", empresa=" + empresa +

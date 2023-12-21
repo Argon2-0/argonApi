@@ -15,6 +15,9 @@ public interface ParticipantePersistence {
     List<Participante> getParticipantes();
     Participante getParticipanteById(long id);
     Participante findByTipoDocumentoAndCedulaLike(String tipoDocumento,long cedula);
+
+    Participante findByCedulaLike(long cedula);
+
     List<Participante> getParticipanteBetween(Timestamp start, Timestamp end);
     List<Object> countByTiposervicioAndCreatedAtBetween(Timestamp start, Timestamp end, List<TipoServicio> tipoServicios);
 

@@ -10,6 +10,9 @@ public interface VisitanteCursoPersistence {
     Object create(VisitanteCurso item);
     List<VisitanteCurso> getVisitantesCursos();
     VisitanteCurso getVisitanteCursoById(Long id);
+
+    VisitanteCurso getByVisitanteId(Long id);
+
     Object update(VisitanteCurso item);
 
     Object createMasive(ArrayList<VisitanteCurso> visitantesCursos);

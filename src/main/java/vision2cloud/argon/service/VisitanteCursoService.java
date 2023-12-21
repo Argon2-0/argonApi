@@ -38,6 +38,9 @@ public class VisitanteCursoService {
     public VisitanteCurso getVisitanteCursoById(Long id) {
         return visitanteCursoImpl.getVisitanteCursoById(id);
     }
+    public VisitanteCurso getByVisitanteId(Long id) {
+        return visitanteCursoImpl.getByVisitanteId(id);
+    }
 
     public Object update(VisitanteCurso item) {
         return visitanteCursoImpl.update(item);

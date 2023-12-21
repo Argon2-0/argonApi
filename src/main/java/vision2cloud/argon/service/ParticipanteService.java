@@ -3,10 +3,7 @@ package vision2cloud.argon.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import vision2cloud.argon.model.Curso;
-import vision2cloud.argon.model.Herramienta;
-import vision2cloud.argon.model.Participante;
-import vision2cloud.argon.model.TipoServicio;
+import vision2cloud.argon.model.*;
 import vision2cloud.argon.persistence.Impl.ParticipanteImpl;
 import vision2cloud.argon.persistence.Impl.TipoServicioImpl;
 
@@ -14,6 +11,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service("ParticipanteService")
 public class ParticipanteService {
@@ -38,9 +37,11 @@ public class ParticipanteService {
         return participanteImpl.getParticipantes();
     }
     public Participante findByTipoDocumentoAndCedulaLike(String tipoDocumento,long cedula) {
-        System.out.println(participanteImpl.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula).getFechaNacimiento());
-        System.out.println(participanteImpl.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula).getCreatedAt());
         return participanteImpl.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula);
+    }
+
+    public Participante findByCedulaLike(long cedula) {
+        return participanteImpl.findByCedulaLike(cedula);
     }
     public Participante getParticipanteById(long id) {
         return participanteImpl.getParticipanteById(id);
@@ -67,6 +68,16 @@ public class ParticipanteService {
     }
     public List<Participante> getParticipanteBetween(Timestamp start, Timestamp end) {
         return participanteImpl.getParticipanteBetween(start, end);
+    }
+
+    public List<Empresa> getEmpresasByParticipanteBetween(Timestamp start, Timestamp end) {
+        List<Participante> participantes = participanteImpl.getParticipanteBetween(start, end);
+
+        return participantes.stream()
+                .map(Participante::getEmpresa)
+                .distinct()
+                .collect(Collectors.toList());
+
     }
 
     public List<Object> findDistinctByCedulaAndCreatedAtBetween(Timestamp start, Timestamp end) {

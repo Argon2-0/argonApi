@@ -3,7 +3,6 @@ package vision2cloud.argon.persistence.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import vision2cloud.argon.model.Curso;
 import vision2cloud.argon.model.Participante;
 import vision2cloud.argon.model.TipoServicio;
 import vision2cloud.argon.persistence.ParticipantePersistence;
@@ -40,6 +39,11 @@ public class ParticipanteImpl implements ParticipantePersistence {
     @Override
     public Participante findByTipoDocumentoAndCedulaLike(String tipoDocumento,long cedula) {
         return participanteRepository.findByTipoDocumentoAndCedulaLike(tipoDocumento, cedula);
+    }
+
+    @Override
+    public Participante findByCedulaLike(long cedula) {
+        return participanteRepository.findByCedulaLike(cedula);
     }
 
     @Override

@@ -128,6 +128,29 @@ public class ParticipanteController {
         }
     }
 
+    @RequestMapping(value = "/getByCedula/{cedula}",method = RequestMethod.GET)
+    public ResponseEntity<?> findByCedulaLike(@PathVariable("cedula") long cedula) {
+        try {
+            //obtener datos que se enviarán a través del API
+            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
+            //obtener datos que se enviarán a través del API
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
+                ArrayList<Object> response = new ArrayList<Object>();
+                response.add( respuesta.get(1));
+                response.add(participanteService.findByCedulaLike(cedula));
+                return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+            }
+            return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
+        } catch (Exception ex) {
+            Logger.getLogger(ParticipanteController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @RequestMapping(value = "/getToday",method = RequestMethod.GET)
     public ResponseEntity<?> getParticipanteToday() {
         try {
@@ -164,6 +187,29 @@ public class ParticipanteController {
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(participanteService.getParticipanteBetween(new Timestamp(start), new Timestamp(end)));
+                return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+            }
+            return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
+        } catch (Exception ex) {
+            Logger.getLogger(ParticipanteController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/getEmpresasByParticipanteBetween/{start}/{end}",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<?> getEmpresasByParticipanteBetween(@PathVariable("start") Long start, @PathVariable("end") Long end) {
+        try {
+            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
+            //obtener datos que se enviarán a través del API
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
+                ArrayList<Object> response = new ArrayList<Object>();
+                response.add( respuesta.get(1));
+                response.add(participanteService.getEmpresasByParticipanteBetween(new Timestamp(start), new Timestamp(end)));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
             }

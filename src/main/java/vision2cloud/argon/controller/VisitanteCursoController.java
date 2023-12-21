@@ -77,7 +77,7 @@ public class VisitanteCursoController {
         }
     }
 
-    @RequestMapping(value = "/getByNit/{nit}",method = RequestMethod.GET)
+    @RequestMapping(value = "/getByCodigo/{nit}",method = RequestMethod.GET)
     public ResponseEntity<?> getCursoByCodigo(@PathVariable("codigo") long id) {
         try {
             //obtener datos que se enviarán a través del API
@@ -90,6 +90,29 @@ public class VisitanteCursoController {
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(visitanteCursoService.getVisitanteCursoById(id));
+                return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+            }
+            return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
+        } catch (Exception ex) {
+            Logger.getLogger(VisitanteCursoController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/getByVisitante/{id}",method = RequestMethod.GET)
+    public ResponseEntity<?> getByVisitanteId(@PathVariable("id") long id) {
+        try {
+            //obtener datos que se enviarán a través del API
+            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
+            //obtener datos que se enviarán a través del API
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
+                ArrayList<Object> response = new ArrayList<Object>();
+                response.add( respuesta.get(1));
+                response.add(visitanteCursoService.getByVisitanteId(id));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
             }

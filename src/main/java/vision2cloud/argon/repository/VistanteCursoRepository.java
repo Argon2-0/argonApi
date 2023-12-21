@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository("VistanteCursoRepository")
 public interface VistanteCursoRepository extends JpaRepository<VisitanteCurso,Long> {
+    VisitanteCurso getByVisitanteIdLike(long id);
 
     List<VisitanteCurso> findByDiaInicioBetweenOrDiaFinBetween(Timestamp startInicio, Timestamp endInicio, Timestamp startFin, Timestamp endFin);
 
