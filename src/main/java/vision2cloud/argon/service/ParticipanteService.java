@@ -59,9 +59,6 @@ public class ParticipanteService {
         return participanteImpl.countByTiposervicioAndCreatedAtBetween(start,end,tipoServicios);
     }
 
-    public List<Object> findBySexoLikeAndCreatedAtBetween(Timestamp start, Timestamp end){
-        return participanteImpl.findBySexoLikeAndCreatedAtBetween(start,end);
-    }
     public List<Participante> getParticipanteBetween(Timestamp start, Timestamp end) {
         return participanteImpl.getParticipanteBetween(start, end);
     }

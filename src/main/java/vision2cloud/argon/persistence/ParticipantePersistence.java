@@ -20,7 +20,6 @@ public interface ParticipantePersistence {
 
     List<Participante> getParticipanteBetween(Timestamp start, Timestamp end);
     List<Object> countByTiposervicioAndCreatedAtBetween(Timestamp start, Timestamp end, List<TipoServicio> tipoServicios);
-    List<Object> findBySexoLikeAndCreatedAtBetween(Timestamp start, Timestamp end);
 
     List<Object> findDistinctByCedulaAndCreatedAtBetween(Timestamp start, Timestamp end);
 

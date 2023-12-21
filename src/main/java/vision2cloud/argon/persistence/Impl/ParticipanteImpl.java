@@ -68,22 +68,6 @@ public class ParticipanteImpl implements ParticipantePersistence {
         return response;
     }
 
-    public List<Object> findBySexoLikeAndCreatedAtBetween(Timestamp start, Timestamp end) {
-        List<Object> response = new ArrayList<Object>();
-        List<String> servicios = new ArrayList<String>();
-        List<Integer> cantidad = new ArrayList<Integer>();
-        Integer cuantos;
-        cuantos = participanteRepository.findBySexoLikeAndCreatedAtBetween("Hombre",start,end).size();
-        servicios.add("Hombres: "+cuantos);
-        cantidad.add(cuantos);
-        cuantos = participanteRepository.findBySexoLikeAndCreatedAtBetween("Mujer",start,end).size();
-        servicios.add("Mujeres: "+cuantos);
-        cantidad.add(cuantos);
-        response.add(servicios);
-        response.add(cantidad);
-        return response;
-    }
-
     @Override
     public List<Object> findDistinctByCedulaAndCreatedAtBetween(Timestamp start, Timestamp end) {
         List<Object> response = new ArrayList<Object>();
