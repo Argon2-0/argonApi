@@ -46,6 +46,7 @@ public class ParticipanteImpl implements ParticipantePersistence {
         return participanteRepository.findByCedulaLike(cedula);
     }
 
+
     @Override
     public List<Participante> getParticipanteBetween(Timestamp start, Timestamp end) {
         return participanteRepository.findByCreatedAtBetween(start,end);
