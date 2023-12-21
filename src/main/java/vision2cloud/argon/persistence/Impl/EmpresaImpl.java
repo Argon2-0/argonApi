@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import vision2cloud.argon.model.Empresa;
-import vision2cloud.argon.model.Item;
-import vision2cloud.argon.model.TipoServicio;
 import vision2cloud.argon.persistence.EmpresaPersistence;
-import vision2cloud.argon.persistence.ItemPersistence;
 import vision2cloud.argon.repository.EmpresaRepository;
 
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ public class EmpresaImpl implements EmpresaPersistence {
     }
 
     @Override
-    public Empresa getEmpresaByNit(int nit) {
+    public Empresa getEmpresaByNit(String nit) {
         List<Empresa> empresas = empresaRepository.findAll();
         for (Empresa empresa: empresas){
             if (empresa.getNit() == nit){

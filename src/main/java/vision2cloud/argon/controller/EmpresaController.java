@@ -103,7 +103,7 @@ public class EmpresaController {
     }
 
     @RequestMapping(value = "/getByNit/{nit}",method = RequestMethod.GET)
-    public ResponseEntity<?> getEmpresaById(@PathVariable("nit") int nit) {
+    public ResponseEntity<?> getEmpresaById(@PathVariable("nit") String nit) {
         try {
             //obtener datos que se enviarán a través del API
             ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),

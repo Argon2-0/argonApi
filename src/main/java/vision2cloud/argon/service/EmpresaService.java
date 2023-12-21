@@ -28,7 +28,7 @@ public class EmpresaService {
         return empresaImpl.getEmpresasByDisponible(disponible);
     }
 
-    public Empresa getEmpresaByNit(int nit) {
+    public Empresa getEmpresaByNit(String nit) {
         return empresaImpl.getEmpresaByNit(nit);
     }
 

@@ -10,7 +10,8 @@ public interface EmpresaPersistence {
     Object create(Empresa item);
     List<Empresa> getEmpresas();
     List<Empresa> getEmpresasByDisponible(String disponible);
-    Empresa getEmpresaByNit(int nit);
+    Empresa getEmpresaByNit(String nit);
+
     Object update(Empresa item);
 
     Object createMasive(ArrayList<Empresa> empresas);

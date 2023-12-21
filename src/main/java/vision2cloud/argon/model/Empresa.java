@@ -8,7 +8,7 @@ public class Empresa {
 
     @Id
     @Column(name = "nit")
-    private int nit;
+    private String nit;
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "disponible")
@@ -16,17 +16,17 @@ public class Empresa {
     public Empresa() {
     }
 
-    public Empresa(int nit, String nombre, String disponible) {
+    public Empresa(String nit, String nombre, String disponible) {
         this.nit = nit;
         this.nombre = nombre;
         this.disponible = disponible;
     }
 
-    public int getNit() {
+    public String getNit() {
         return nit;
     }
 
-    public void setNit(int nit) {
+    public void setNit(String nit) {
         this.nit = nit;
     }
 
