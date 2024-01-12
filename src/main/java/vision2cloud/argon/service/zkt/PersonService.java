@@ -34,7 +34,7 @@ public class PersonService {
         return personImpl.create(person);
     }
 
-    public Object update(String pin) throws URISyntaxException {
+    public Object update(String pin, String estado) throws URISyntaxException {
 
         System.out.println("---------------------------------------");
         System.out.println("updatePrestamoService");
@@ -51,7 +51,7 @@ public class PersonService {
         System.out.println(ldt);
         System.out.println(nextDay);
 
-        if(person.getAccEndTime().equals(nextDay)){
+        if(estado.equals("Préstado")){
             person.setAccEndTime(now);
         }
         else {

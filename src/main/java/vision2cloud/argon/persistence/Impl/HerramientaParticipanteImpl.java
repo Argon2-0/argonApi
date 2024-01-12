@@ -44,7 +44,7 @@ public class HerramientaParticipanteImpl implements HerramientaParticipantePersi
 
     @Override
     public List<HerramientaParticipante> getHerramientaParticipanteToday() {
-        LocalDate ld = LocalDate.now().minusYears(1);
+        LocalDate ld = LocalDate.now();
         Timestamp start = Timestamp.valueOf(ld.atStartOfDay());
         Timestamp end = Timestamp.valueOf(ld.plusDays(1).atStartOfDay());
         return herramientaParticipanteRepository.findByCreatedAtBetween(start,end);

@@ -59,9 +59,9 @@ public class PersonController {
         }
     }
 
-    @RequestMapping(value = "/updatePrestamo/{pin}",method = RequestMethod.POST)
+    @RequestMapping(value = "/updatePrestamo/{pin}/{estado}",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> update(@PathVariable("pin") String pin) {
+    public ResponseEntity<?> update(@PathVariable("pin") String pin, @PathVariable("estado") String estado) {
         System.out.println("---------------------------------------");
         System.out.println("updatePrestamocontroller");
         System.out.println("---------------------------------------");
@@ -78,7 +78,7 @@ public class PersonController {
                 System.out.println("---------------------------------------");
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
-                response.add(personService.update(pin));
+                response.add(personService.update(pin,estado));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
             }
