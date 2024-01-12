@@ -10,6 +10,8 @@ import vision2cloud.argon.repository.HerramientaParticipanteRepository;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -88,10 +90,22 @@ public class HerramientaParticipanteImpl implements HerramientaParticipantePersi
     }
 
     @Override
-    public List<Object> getDataForDashboard(Timestamp start, Timestamp end) {
+    public List<Object> getDataForDashboard(Timestamp startTime, Timestamp endTime) {
+        // Convertir el Timestamp a LocalDateTime
+        LocalDateTime localDateTimeStart = startTime.toLocalDateTime();
+        // Establecer la hora al inicio del día (medianoche)
+        LocalDateTime start = localDateTimeStart.with(LocalTime.MIN);
+        // Convertir el LocalDateTime de nuevo a Timestamp
+        Timestamp startTimestamp = Timestamp.valueOf(start);
+        // Convertir el Timestamp a LocalDateTime
+        LocalDateTime localDateTimeEnd = endTime.toLocalDateTime();
+        // Establecer la hora al inicio del día (medianoche)
+        LocalDateTime end = localDateTimeEnd.with(LocalTime.MIN).plusDays(1);
+        // Convertir el LocalDateTime de nuevo a Timestamp
+        Timestamp endTimestamp = Timestamp.valueOf(end);
         List<Object> response = new ArrayList<Object>();
         List<Long> cedulas = new ArrayList<>();
-        List<HerramientaParticipante> herramientaParticipantes = herramientaParticipanteRepository.findByCreatedAtBetween(start,end);
+        List<HerramientaParticipante> herramientaParticipantes = herramientaParticipanteRepository.findByCreatedAtBetween(startTimestamp,endTimestamp);
         Long totalHoras = 0L;
         for (HerramientaParticipante herramientaParticipante: herramientaParticipantes){
             System.out.println( herramientaParticipante.getTot_horas());

@@ -58,16 +58,14 @@ public class ParticipanteImpl implements ParticipantePersistence {
 
     @Override
     public List<Object> countByTiposervicioAndCreatedAtBetween(Timestamp startTime, Timestamp endTime,List<TipoServicio> tipoServicios) {
-        Timestamp tuTimestampStart = new Timestamp(System.currentTimeMillis());
         // Convertir el Timestamp a LocalDateTime
-        LocalDateTime localDateTimeStart = tuTimestampStart.toLocalDateTime();
+        LocalDateTime localDateTimeStart = startTime.toLocalDateTime();
         // Establecer la hora al inicio del día (medianoche)
         LocalDateTime start = localDateTimeStart.with(LocalTime.MIN);
         // Convertir el LocalDateTime de nuevo a Timestamp
         Timestamp startTimestamp = Timestamp.valueOf(start);
-        Timestamp tuTimestampEnd = new Timestamp(System.currentTimeMillis());
         // Convertir el Timestamp a LocalDateTime
-        LocalDateTime localDateTimeEnd = tuTimestampEnd.toLocalDateTime();
+        LocalDateTime localDateTimeEnd = endTime.toLocalDateTime();
         // Establecer la hora al inicio del día (medianoche)
         LocalDateTime end = localDateTimeEnd.with(LocalTime.MIN).plusDays(1);
         // Convertir el LocalDateTime de nuevo a Timestamp
