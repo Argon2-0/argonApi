@@ -96,7 +96,7 @@ public class ParticipanteImpl implements ParticipantePersistence {
         actualParticipante.setTiposervicio(participante.getTiposervicio());
         actualParticipante.setTratDatos(participante.getTratDatos());
         actualParticipante.setEstado(participante.getEstado());
-        actualParticipante.setUpdatedAt(participante.getCreatedAt());
+        actualParticipante.setUpdatedAt(participante.getUpdatedAt());
         return participanteRepository.save(actualParticipante);
     }
 
