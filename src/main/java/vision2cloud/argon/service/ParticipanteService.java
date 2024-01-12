@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import vision2cloud.argon.model.*;
+import vision2cloud.argon.model.EmpresaReporte;
 import vision2cloud.argon.persistence.Impl.ParticipanteImpl;
 import vision2cloud.argon.persistence.Impl.TipoServicioImpl;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service("ParticipanteService")
 public class ParticipanteService {
@@ -77,13 +77,22 @@ public class ParticipanteService {
         return participanteImpl.getParticipanteBetween(start, end);
     }
 
-    public List<Empresa> getEmpresasByParticipanteBetween(Timestamp start, Timestamp end) {
+    public List<EmpresaReporte> getEmpresasByParticipanteBetween(Timestamp start, Timestamp end) {
         List<Participante> participantes = participanteImpl.getParticipanteBetween(start, end);
-
-        return participantes.stream()
-                .map(Participante::getEmpresa)
-                .distinct()
-                .collect(Collectors.toList());
+        HashMap<String,EmpresaReporte> empresas = new HashMap<>();
+        EmpresaReporte empresaReporte = null;
+        String key = null;
+        for(Participante participante: participantes){
+            key = participante.getEmpresa().getNit();
+            if(empresas.containsKey(key)){
+                empresaReporte = empresas.get(key);
+                empresaReporte.setDisponible(empresaReporte.getDisponible()+1);
+                empresas.put(key, empresaReporte);
+            }else{
+                empresas.put(key, new EmpresaReporte(key,participante.getEmpresa().getNombre(),1));
+            }
+        }
+        return new ArrayList<>(empresas.values());
 
     }
 

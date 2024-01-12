@@ -106,7 +106,7 @@ public class PersonImpl implements PersonPersistence {
             HostnameVerifier allHostsValid = (hostname, session) -> true;
             // Instalar el HostnameVerifier personalizado
             HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-            
+
             final Gson gson = new Gson();
             RestTemplate restTemplate = new RestTemplate();
             HttpEntity<?> requestEntity = new HttpEntity<>(CreateHttpHeaders());

@@ -64,6 +64,7 @@ public class VisitanteCursoService {
     public List<CursoInforme> findBetweenAndCurso(Timestamp start, Timestamp end, String codigo) {
         List<VisitanteCurso> visitanteCursos = new ArrayList<>();
         List<CursoInforme> cursoInforme = new ArrayList<>();
+        Participante participante = null;
         if(codigo.equals("Todos")){
             visitanteCursos = visitanteCursoImpl.findByDiaInicioBetweenOrDiaFinBetween(start, end);
         }
@@ -71,9 +72,12 @@ public class VisitanteCursoService {
             visitanteCursos = visitanteCursoImpl.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(start,end,codigo);
         }
         for(VisitanteCurso vistanteCurso: visitanteCursos){
+            participante = participanteImpl.getParticipanteById(vistanteCurso.getVisitanteId());
             cursoInforme.add(new CursoInforme(vistanteCurso.getCursoCodigo(),
                     cursoImpl.findByCodigoLike(vistanteCurso.getCursoCodigo()).getNombre(),
-                    participanteImpl.getParticipanteById(vistanteCurso.getVisitanteId()).getNombres()+ " "+ participanteImpl.getParticipanteById(vistanteCurso.getVisitanteId()).getApellidos()));
+                    participante.getTipoDocumento(),
+                    participante.getCedula(),
+                    participante.getNombres()+ " "+ participanteImpl.getParticipanteById(vistanteCurso.getVisitanteId()).getApellidos()));
         }
         return  cursoInforme;
     }

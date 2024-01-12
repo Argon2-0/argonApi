@@ -1,23 +1,22 @@
 package vision2cloud.argon.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 public class CursoInforme {
 
     private String codigo;
-    private String nombre;
-    private String visitante;
+    private String nombreEvento;
+    private String TipoDocumentovisitante;
+    private Long Documentovisitante;
+    private String Nombrevisitante;
 
     public CursoInforme() {
     }
 
-    public CursoInforme(String codigo, String nombre, String visitante) {
+    public CursoInforme(String codigo, String nombreEvento, String tipoDocumentovisitante, Long documentovisitante, String nombrevisitante) {
         this.codigo = codigo;
-        this.nombre = nombre;
-        this.visitante = visitante;
+        this.nombreEvento = nombreEvento;
+        TipoDocumentovisitante = tipoDocumentovisitante;
+        Documentovisitante = documentovisitante;
+        Nombrevisitante = nombrevisitante;
     }
 
     public String getCodigo() {
@@ -28,28 +27,48 @@ public class CursoInforme {
         this.codigo = codigo;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreEvento() {
+        return nombreEvento;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreEvento(String nombreEvento) {
+        this.nombreEvento = nombreEvento;
     }
 
-    public String getVisitante() {
-        return visitante;
+    public String getTipoDocumentovisitante() {
+        return TipoDocumentovisitante;
     }
 
-    public void setVisitante(String visitante) {
-        this.visitante = visitante;
+    public void setTipoDocumentovisitante(String tipoDocumentovisitante) {
+        TipoDocumentovisitante = tipoDocumentovisitante;
+    }
+
+    public Long getDocumentovisitante() {
+        return Documentovisitante;
+    }
+
+    public void setDocumentovisitante(Long documentovisitante) {
+        Documentovisitante = documentovisitante;
+    }
+
+    public String getNombrevisitante() {
+        return Nombrevisitante;
+    }
+
+    public void setNombrevisitante(String nombrevisitante) {
+        Nombrevisitante = nombrevisitante;
     }
 
     @Override
     public String toString() {
         return "CursoInforme{" +
                 "codigo='" + codigo + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", visitante='" + visitante + '\'' +
+                ", nombreEvento='" + nombreEvento + '\'' +
+                ", TipoDocumentovisitante='" + TipoDocumentovisitante + '\'' +
+                ", Documentovisitante=" + Documentovisitante +
+                ", Nombrevisitante='" + Nombrevisitante + '\'' +
                 '}';
     }
 }
+
+
