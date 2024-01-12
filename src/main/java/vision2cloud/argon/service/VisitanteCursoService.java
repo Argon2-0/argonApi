@@ -10,6 +10,8 @@ import vision2cloud.argon.persistence.Impl.VisitanteCursoImpl;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,16 +84,29 @@ public class VisitanteCursoService {
         return  cursoInforme;
     }
 
-    public List<Object> findBetween(Timestamp start, Timestamp end) {
+    public List<Object> findBetween(Timestamp startTime, Timestamp endTime) {
         List<Curso> cursos = cursoImpl.getCursos();
-
+        Timestamp tuTimestampStart = new Timestamp(System.currentTimeMillis());
+        // Convertir el Timestamp a LocalDateTime
+        LocalDateTime localDateTimeStart = tuTimestampStart.toLocalDateTime();
+        // Establecer la hora al inicio del día (medianoche)
+        LocalDateTime start = localDateTimeStart.with(LocalTime.MIN);
+        // Convertir el LocalDateTime de nuevo a Timestamp
+        Timestamp startTimestamp = Timestamp.valueOf(start);
+        Timestamp tuTimestampEnd = new Timestamp(System.currentTimeMillis());
+        // Convertir el Timestamp a LocalDateTime
+        LocalDateTime localDateTimeEnd = tuTimestampEnd.toLocalDateTime();
+        // Establecer la hora al inicio del día (medianoche)
+        LocalDateTime end = localDateTimeEnd.with(LocalTime.MIN).plusDays(1);
+        // Convertir el LocalDateTime de nuevo a Timestamp
+        Timestamp endTimestamp = Timestamp.valueOf(end);
         List<Object> response = new ArrayList<Object>();
         List<String> servicios = new ArrayList<String>();
         List<Integer> cantidad = new ArrayList<Integer>();
         Integer cuantos;
         for (Curso curso: cursos){
             System.out.println(curso.getCodigo());
-            List<VisitanteCurso> visitanteCursos = visitanteCursoImpl.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(start,end,curso.getCodigo());
+            List<VisitanteCurso> visitanteCursos = visitanteCursoImpl.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(startTimestamp,endTimestamp,curso.getCodigo());
             cuantos = visitanteCursos.size();
             System.out.println(visitanteCursos.size());
             servicios.add(curso.getNombre()+": "+cuantos);
