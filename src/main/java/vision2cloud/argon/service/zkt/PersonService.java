@@ -36,8 +36,13 @@ public class PersonService {
 
     public Object update(String pin) throws URISyntaxException {
 
+        System.out.println("---------------------------------------");
+        System.out.println("updatePrestamoService");
+        System.out.println("---------------------------------------");
         Person person = personImpl.get(pin);
+        System.out.println("---------------------------------------");
         System.out.println(person.toString());
+        System.out.println("---------------------------------------");
         LocalDateTime ldt = LocalDateTime.now();
         LocalDate ld = LocalDate.now();
         String nextDay = Timestamp.valueOf(ld.plusDays(1).atStartOfDay()).toString().split("\\.")[0];

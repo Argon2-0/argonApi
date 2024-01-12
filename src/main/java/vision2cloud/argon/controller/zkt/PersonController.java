@@ -62,6 +62,9 @@ public class PersonController {
     @RequestMapping(value = "/updatePrestamo/{pin}",method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> update(@PathVariable("pin") String pin) {
+        System.out.println("---------------------------------------");
+        System.out.println("updatePrestamocontroller");
+        System.out.println("---------------------------------------");
         try {
             //obtener datos que se enviarán a través del API
             ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
@@ -70,6 +73,9 @@ public class PersonController {
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
+                System.out.println("---------------------------------------");
+                System.out.println("updatePrestamoControllerInt");
+                System.out.println("---------------------------------------");
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
                 response.add(personService.update(pin));
