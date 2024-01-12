@@ -12,6 +12,8 @@ import java.util.List;
 @Repository("ParticipanteRepository")
 public interface ParticipanteRepository extends JpaRepository<Participante,Integer> {
     List<Participante> findByCreatedAtBetween(Timestamp start, Timestamp end);
+    List<Participante> findByCreatedAtBetweenOrUpdatedAtBetween(Timestamp startCreated, Timestamp endCreated,Timestamp startUpdated, Timestamp endUpdated);
+
     Participante findByTipoDocumentoAndCedulaLike(String tipoDocumento, Long documento);
     Participante findByCedulaLike(Long documento);
     List<Participante> findByTiposervicioIdAndCreatedAtBetween(Long TiposevicioId,Timestamp start, Timestamp end);

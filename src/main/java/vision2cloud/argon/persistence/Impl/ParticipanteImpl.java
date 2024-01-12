@@ -51,7 +51,7 @@ public class ParticipanteImpl implements ParticipantePersistence {
 
     @Override
     public List<Participante> getParticipanteBetween(Timestamp start, Timestamp end) {
-        return participanteRepository.findByCreatedAtBetween(start,end);
+        return participanteRepository.findByCreatedAtBetweenOrUpdatedAtBetween(start,end, start,end);
     }
 
     @Override
