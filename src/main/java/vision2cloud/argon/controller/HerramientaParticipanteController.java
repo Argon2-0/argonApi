@@ -32,7 +32,10 @@ public class HerramientaParticipanteController {
     @ResponseBody
     public ResponseEntity<?> create(@RequestBody HerramientaParticipante herramientaParticipante) {
         try {
+            System.out.println("---------------------------------------");
+            System.out.println("HerramientaParticipanteCreateController");
             System.out.println(herramientaParticipante.toString());
+            System.out.println("---------------------------------------");
             //obtener datos que se enviarán a través del API
             ArrayList<String> respuesta = validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
                     Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),

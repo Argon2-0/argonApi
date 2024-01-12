@@ -26,6 +26,10 @@ public class HerramientaParticipanteService {
     @Qualifier("ParticipanteImpl")
     ParticipanteImpl participanteImpl;
     public Object create(HerramientaParticipante herramientaParticipante) {
+        System.out.println("---------------------------------------");
+        System.out.println("HerramientaParticipanteCreateService");
+        System.out.println(herramientaParticipante.toString());
+        System.out.println("---------------------------------------");
         return herramientaParticipanteImpl.create(herramientaParticipante);
     }
 

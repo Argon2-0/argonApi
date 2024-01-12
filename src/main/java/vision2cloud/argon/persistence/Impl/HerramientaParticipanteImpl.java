@@ -24,6 +24,10 @@ public class HerramientaParticipanteImpl implements HerramientaParticipantePersi
 
     @Override
     public Object create(HerramientaParticipante herramientaParticipante) {
+        System.out.println("---------------------------------------");
+        System.out.println("HerramientaParticipanteCreateImpl");
+        System.out.println(herramientaParticipante.toString());
+        System.out.println("---------------------------------------");
         System.out.println(new Date(herramientaParticipante.getCreatedAt().getTime()));
         return herramientaParticipanteRepository.save(herramientaParticipante);
     }
