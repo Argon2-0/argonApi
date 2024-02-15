@@ -16,6 +16,10 @@ public class Empresa {
     public Empresa() {
     }
 
+    public Empresa(String nit) {
+        this.nit = nit;
+    }
+
     public Empresa(String nit, String nombre, String disponible) {
         this.nit = nit;
         this.nombre = nombre;

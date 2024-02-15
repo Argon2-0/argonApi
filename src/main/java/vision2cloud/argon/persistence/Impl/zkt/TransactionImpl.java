@@ -35,7 +35,7 @@ public class TransactionImpl implements TransactionPersistence {
     }
 
     @Override
-    public ArrayList<Transaction> get(String initalDate, String endDate) throws URISyntaxException {
+    public ArrayList<Transaction> get(String personPin, String initalDate, String endDate) throws URISyntaxException {
         try {
             System.out.println("GrabarPerson");
 
@@ -69,12 +69,29 @@ public class TransactionImpl implements TransactionPersistence {
             final Gson gson = new Gson();
             RestTemplate restTemplate = new RestTemplate();
             HttpEntity<?> requestEntity = new HttpEntity<>(createHttpHeaders());
-            String urlTemplate = UriComponentsBuilder.fromHttpUrl(basicUri + "transaction/list" )
-                    .queryParam("pageNo", 1)
-                    .queryParam("pageSize", 1000)
-                    .queryParam("access_token", token)
-                    .encode()
-                    .toUriString();
+            String urlTemplate = null;
+
+            if(personPin.isEmpty()){
+                urlTemplate = UriComponentsBuilder.fromHttpUrl(basicUri + "transaction/list" )
+                        .queryParam("startDate", initalDate)
+                        .queryParam("endDate", endDate)
+                        .queryParam("pageNo", 1)
+                        .queryParam("pageSize", 1000)
+                        .queryParam("access_token", token)
+                        .encode()
+                        .toUriString();
+            }else{
+                urlTemplate = UriComponentsBuilder.fromHttpUrl(basicUri + "transaction/list" )
+                        .queryParam("personPin", personPin)
+                        .queryParam("startDate", initalDate)
+                        .queryParam("endDate", endDate)
+                        .queryParam("pageNo", 1)
+                        .queryParam("pageSize", 1000)
+                        .queryParam("access_token", token)
+                        .encode()
+                        .toUriString();
+            }
+
             ResponseEntity<ResponseTransaction> response = restTemplate.exchange(
                     urlTemplate, HttpMethod.GET, requestEntity, ResponseTransaction.class);
             ArrayList<Transaction> transaction = response.getBody().getData();

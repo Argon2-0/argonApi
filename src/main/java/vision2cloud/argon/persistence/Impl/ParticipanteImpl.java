@@ -107,7 +107,6 @@ public class ParticipanteImpl implements ParticipantePersistence {
         Participante actualParticipante = getParticipanteById(participante.getId());
         actualParticipante.setCelular(participante.getCelular());
         actualParticipante.setEmail(participante.getEmail());
-        actualParticipante.setTiposervicio(participante.getTiposervicio());
         actualParticipante.setTratDatos(participante.getTratDatos());
         actualParticipante.setEstado(participante.getEstado());
         actualParticipante.setUpdatedAt(participante.getUpdatedAt());

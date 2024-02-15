@@ -19,11 +19,16 @@ public class Curso {
     public Curso() {
     }
 
+    public Curso(String codigo) {
+        this.codigo = codigo;
+    }
+
     public Curso(String codigo, String nombre, String disponible) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.disponible = disponible;
     }
+
 
     public String getCodigo() {
         return codigo;

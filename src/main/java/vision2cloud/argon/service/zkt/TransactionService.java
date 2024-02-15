@@ -17,7 +17,7 @@ public class TransactionService {
     TransactionImpl transactionImpl;
 
     public ArrayList<Transaction> get(String initialDate, String endDate) throws URISyntaxException{
-        ArrayList<Transaction> transactions = transactionImpl.get(initialDate, endDate);
+        ArrayList<Transaction> transactions = transactionImpl.get("", initialDate, endDate);
         ArrayList<Transaction> transactionFilter = new ArrayList<>();
         for (Transaction transaction: transactions){
             if (transaction.getDeptName().equals("CPA")){

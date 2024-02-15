@@ -18,7 +18,6 @@ public class HerramientaParticipanteService {
     @Autowired
     @Qualifier("HerramientaParticipanteImpl")
     HerramientaParticipanteImpl herramientaParticipanteImpl;
-
     @Autowired
     @Qualifier("HerramientaImpl")
     HerramientaImpl herramientaImpl;
@@ -59,6 +58,8 @@ public class HerramientaParticipanteService {
     }
 
     public List<HerramientaParticipante> findByCreatedAtBetweenAndMarca(Timestamp start, Timestamp end, String marca) {
+
+
         if(marca.equals("Todas")){
             return herramientaParticipanteImpl.getHerramientaCreatedAtBetween(start, end);
         }

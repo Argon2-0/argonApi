@@ -6,5 +6,5 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public interface TransactionPersistence {
-    ArrayList<Transaction> get(String initalDate, String endDate) throws URISyntaxException;
+    ArrayList<Transaction> get(String personPin, String initalDate, String endDate) throws URISyntaxException;
 }

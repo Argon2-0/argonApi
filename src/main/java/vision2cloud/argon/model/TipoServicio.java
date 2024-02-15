@@ -24,6 +24,10 @@ public class TipoServicio {
     public TipoServicio() {
     }
 
+    public TipoServicio(long id) {
+        this.id = id;
+    }
+
     public TipoServicio(long id, String nombre, String descripcion, Timestamp createdAt, Timestamp updatedAt, String disponible) {
         this.id = id;
         this.nombre = nombre;

@@ -23,10 +23,6 @@ public class Participante {
     private String celular;
     @Column(name = "email")
     private String email;
-    @ManyToOne
-    private TipoServicio tiposervicio;
-    @ManyToOne
-    private Empresa empresa;
     @Column(name = "tratDatos")
     private String tratDatos;
     @Column(name = "estado")
@@ -39,7 +35,7 @@ public class Participante {
     public Participante() {
     }
 
-    public Participante(Long id, String tipoDocumento, Long cedula, String nombres, String apellidos, String celular,String email, TipoServicio tiposervicio, Empresa empresa,String tratDatos, String estado, Timestamp createdAt, Timestamp updatedAt) {
+    public Participante(Long id, String tipoDocumento, Long cedula, String nombres, String apellidos, String celular,String email, String tratDatos, String estado, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.tipoDocumento = tipoDocumento;
         this.cedula = cedula;
@@ -47,8 +43,6 @@ public class Participante {
         this.apellidos = apellidos;
         this.celular = celular;
         this.email = email;
-        this.tiposervicio = tiposervicio;
-        this.empresa = empresa;
         this.tratDatos = tratDatos;
         this.estado = estado;
         this.createdAt = createdAt;
@@ -108,22 +102,6 @@ public class Participante {
         this.email = email;
     }
 
-    public TipoServicio getTiposervicio() {
-        return tiposervicio;
-    }
-
-    public void setTiposervicio(TipoServicio tiposervicio) {
-        this.tiposervicio = tiposervicio;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
     public String getTratDatos() {
         return tratDatos;
     }
@@ -166,8 +144,6 @@ public class Participante {
                 ", apellidos='" + apellidos + '\'' +
                 ", celular='" + celular + '\'' +
                 ", email='" + email + '\'' +
-                ", tiposervicio=" + tiposervicio +
-                ", empresa=" + empresa +
                 ", tratDatos='" + tratDatos + '\'' +
                 ", estado='" + estado + '\'' +
                 ", createdAt=" + createdAt +

@@ -113,16 +113,9 @@ public class HerramientaParticipanteImpl implements HerramientaParticipantePersi
             if(!cedulas.contains(herramientaParticipante.getParticipante().getCedula())){
                 cedulas.add(herramientaParticipante.getParticipante().getCedula());
             }
-            if(herramientaParticipante.getUpdatedAt()!=null && herramientaParticipante.getTot_horas()!=null){
-                totalHoras+=herramientaParticipante.getTot_horas();
-            }
-            else{
-                totalHoras+=TimeUnit.HOURS.convert(new Date().getTime()-herramientaParticipante.getCreatedAt().getTime(),TimeUnit.MILLISECONDS);
-            }
         }
         response.add(cedulas.size());
         response.add(herramientaParticipantes.size());
-        response.add(totalHoras);
         return response;
     }
 

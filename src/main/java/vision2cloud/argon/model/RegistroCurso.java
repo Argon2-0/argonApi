@@ -1,14 +1,13 @@
 package vision2cloud.argon.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 public class RegistroCurso {
 
     private String codigo;
+    private long tiposervicioId;
+    private String empresaNit;
     private String tipoDocumento;
     private Long numeroDocumento;
     private Timestamp fechaInicio;
@@ -17,8 +16,10 @@ public class RegistroCurso {
     public RegistroCurso() {
     }
 
-    public RegistroCurso(String codigo, String tipoDocumento, Long numeroDocumento, Timestamp fechaInicio, Timestamp fechaFin) {
+    public RegistroCurso(String codigo, long tiposervicioId, String empresaNit, String tipoDocumento, Long numeroDocumento, Timestamp fechaInicio, Timestamp fechaFin) {
         this.codigo = codigo;
+        this.tiposervicioId = tiposervicioId;
+        this.empresaNit = empresaNit;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
         this.fechaInicio = fechaInicio;
@@ -66,10 +67,28 @@ public class RegistroCurso {
         this.fechaFin = fechaFin;
     }
 
+    public long getTiposervicioId() {
+        return tiposervicioId;
+    }
+
+    public void setTiposervicioId(long tiposervicioId) {
+        this.tiposervicioId = tiposervicioId;
+    }
+
+    public String getEmpresaNit() {
+        return empresaNit;
+    }
+
+    public void setEmpresaNit(String empresaNit) {
+        this.empresaNit = empresaNit;
+    }
+
     @Override
     public String toString() {
         return "RegistroCurso{" +
                 "codigo='" + codigo + '\'' +
+                ", tiposervicioId=" + tiposervicioId +
+                ", empresaNit='" + empresaNit + '\'' +
                 ", tipoDocumento='" + tipoDocumento + '\'' +
                 ", numeroDocumento=" + numeroDocumento +
                 ", fechaInicio=" + fechaInicio +

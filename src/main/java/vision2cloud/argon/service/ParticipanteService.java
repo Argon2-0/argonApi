@@ -78,7 +78,7 @@ public class ParticipanteService {
     }
 
     public List<EmpresaReporte> getEmpresasByParticipanteBetween(Timestamp start, Timestamp end) {
-        List<Participante> participantes = participanteImpl.getParticipanteBetween(start, end);
+       /* List<Participante> participantes = participanteImpl.getParticipanteBetween(start, end);
         HashMap<String,EmpresaReporte> empresas = new HashMap<>();
         EmpresaReporte empresaReporte = null;
         String key = null;
@@ -92,7 +92,8 @@ public class ParticipanteService {
                 empresas.put(key, new EmpresaReporte(key,participante.getEmpresa().getNombre(),1));
             }
         }
-        return new ArrayList<>(empresas.values());
+        return new ArrayList<>(empresas.values());*/
+        return null;
 
     }
 
