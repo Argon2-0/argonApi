@@ -257,6 +257,7 @@ public class VisitaVisitanteService {
                                         vistante.getTiposervicio().getNombre(),
                                         vistante.getTiposervicio().getDescripcion(),
                                         transactions.get(transactions.size() - 1).getEventTime(),
+                                        transactions.get(transactions.size() - 1).getEventPointName(),
                                         participante.getTratDatos()
                                 )
                         );

@@ -15,6 +15,7 @@ public class ReportesInforme {
     private String nombreTipoServicio;
     private String descripcionTipoServicio;
     private String fechaHora;
+    private String molinete;
     private String tratDatos;
 
 
@@ -23,7 +24,7 @@ public class ReportesInforme {
     }
 
 
-    public ReportesInforme(String tipoDocumentovisitante, Long documentovisitante, String nombres, String apellidos, String celular, String email, String nitEmpresa, String nombreEmpresa, String codigo, String nombreEvento, String nombreTipoServicio, String descripcionTipoServicio, String fechaHora, String tratDatos) {
+    public ReportesInforme(String tipoDocumentovisitante, Long documentovisitante, String nombres, String apellidos, String celular, String email, String nitEmpresa, String nombreEmpresa, String codigo, String nombreEvento, String nombreTipoServicio, String descripcionTipoServicio, String fechaHora, String molinete, String tratDatos) {
         TipoDocumentovisitante = tipoDocumentovisitante;
         Documentovisitante = documentovisitante;
         this.nombres = nombres;
@@ -37,6 +38,7 @@ public class ReportesInforme {
         this.nombreTipoServicio = nombreTipoServicio;
         this.descripcionTipoServicio = descripcionTipoServicio;
         this.fechaHora = fechaHora;
+        this.molinete = molinete;
         this.tratDatos = tratDatos;
     }
 
@@ -144,6 +146,14 @@ public class ReportesInforme {
         this.fechaHora = fechaHora;
     }
 
+    public String getMolinete() {
+        return molinete;
+    }
+
+    public void setMolinete(String molinete) {
+        this.molinete = molinete;
+    }
+
     public String getTratDatos() {
         return tratDatos;
     }
@@ -168,6 +178,7 @@ public class ReportesInforme {
                 ", nombreTipoServicio='" + nombreTipoServicio + '\'' +
                 ", descripcionTipoServicio='" + descripcionTipoServicio + '\'' +
                 ", fechaHora='" + fechaHora + '\'' +
+                ", molinete='" + molinete + '\'' +
                 ", tratDatos='" + tratDatos + '\'' +
                 '}';
     }

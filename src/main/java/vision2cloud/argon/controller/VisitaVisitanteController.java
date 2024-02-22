@@ -195,6 +195,31 @@ public class VisitaVisitanteController {
         }
     }
 
+    @RequestMapping(value = "/findByCreatedAtBetweenAndMarca/{start}/{end}/{codigo}",method = RequestMethod.GET)
+    public ResponseEntity<?> findByCreatedAtBetweenAndMarca(@PathVariable("start") Long start, @PathVariable("end") Long end, @PathVariable("marca") String marca) {
+        System.out.println("aassssdasfasfafasfa");
+        try {
+            //obtener datos que se enviarán a través del API
+            ArrayList<String> respuesta =validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),
+                    Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("CurrentTime")));
+            //obtener datos que se enviarán a través del API
+            String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
+            if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
+
+                ArrayList<Object> response = new ArrayList<Object>();
+                response.add( respuesta.get(1));
+                response.add(visitaVisitanteService.findByCreatedAtBetweenAndMarca(new Timestamp(start), new Timestamp(end), marca));
+                return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+
+            }
+            return new ResponseEntity<>("Unauthorized",HttpStatus.FORBIDDEN);
+        } catch (Exception ex) {
+            Logger.getLogger(HerramientaParticipanteController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @RequestMapping(value = "/getByTimeAndCurso/{start}/{end}/{codigo}",method = RequestMethod.GET)
     public ResponseEntity<?> findBetweenAndCurso(@PathVariable("start") Long start, @PathVariable("end") Long end, @PathVariable("codigo") String codigo) {
         System.out.println("aassssdasfasfafasfa");
@@ -259,7 +284,7 @@ public class VisitaVisitanteController {
 
                 ArrayList<Object> response = new ArrayList<Object>();
                 response.add( respuesta.get(1));
-                response.add(visitaVisitanteService.findBetweenAndTipoServicio(new Timestamp(start), new Timestamp(end), codigo));
+                response.add(visitaVisitanteService.findBetweenAndEmpresa(new Timestamp(start), new Timestamp(end), codigo));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
             }
