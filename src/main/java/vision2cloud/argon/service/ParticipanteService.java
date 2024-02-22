@@ -68,10 +68,6 @@ public class ParticipanteService {
         return participanteImpl.getParticipanteBetween(start, end);
     }
 
-    public List<Object> countByTiposervicioAndCreatedAtBetween(Timestamp start, Timestamp end){
-        List<TipoServicio> tipoServicios =tipoServicioImpl.getTiposServicios();
-        return participanteImpl.countByTiposervicioAndCreatedAtBetween(start,end,tipoServicios);
-    }
 
     public List<Participante> getParticipanteBetween(Timestamp start, Timestamp end) {
         return participanteImpl.getParticipanteBetween(start, end);
@@ -103,13 +99,6 @@ public class ParticipanteService {
 
     public Object update(Participante participante) {
         return participanteImpl.update(participante);
-    }
-
-    public List<Participante> findBetweenAndTipoServicio(Timestamp start, Timestamp end, String tiposervicio) {
-        if(tiposervicio.equals("Todos")){
-            return participanteImpl.getParticipanteBetween(start, end);
-        }
-        return participanteImpl.getParticipanteBetweenAndTipoServicio(start,end,tiposervicio);
     }
 
     public Object createMasive(ArrayList<Participante> participantes) {

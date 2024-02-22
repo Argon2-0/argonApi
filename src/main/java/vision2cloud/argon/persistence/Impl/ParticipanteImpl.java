@@ -56,33 +56,6 @@ public class ParticipanteImpl implements ParticipantePersistence {
         return participanteRepository.findByCreatedAtBetweenOrUpdatedAtBetween(start,end, start,end);
     }
 
-    @Override
-    public List<Object> countByTiposervicioAndCreatedAtBetween(Timestamp startTime, Timestamp endTime,List<TipoServicio> tipoServicios) {
-        // Convertir el Timestamp a LocalDateTime
-        LocalDateTime localDateTimeStart = startTime.toLocalDateTime();
-        // Establecer la hora al inicio del día (medianoche)
-        LocalDateTime start = localDateTimeStart.with(LocalTime.MIN);
-        // Convertir el LocalDateTime de nuevo a Timestamp
-        Timestamp startTimestamp = Timestamp.valueOf(start);
-        // Convertir el Timestamp a LocalDateTime
-        LocalDateTime localDateTimeEnd = endTime.toLocalDateTime();
-        // Establecer la hora al inicio del día (medianoche)
-        LocalDateTime end = localDateTimeEnd.with(LocalTime.MIN).plusDays(1);
-        // Convertir el LocalDateTime de nuevo a Timestamp
-        Timestamp endTimestamp = Timestamp.valueOf(end);
-        List<Object> response = new ArrayList<Object>();
-        List<String> servicios = new ArrayList<String>();
-        List<Integer> cantidad = new ArrayList<Integer>();
-        Integer cuantos;
-        for (TipoServicio tipoServicio: tipoServicios){
-            cuantos = participanteRepository.findByTiposervicioIdAndCreatedAtBetween(tipoServicio.getId(),startTimestamp,endTimestamp).size();
-            servicios.add(tipoServicio.getNombre()+": "+cuantos);
-            cantidad.add(cuantos);
-        }
-        response.add(servicios);
-        response.add(cantidad);
-        return response;
-    }
 
     @Override
     public List<Object> findDistinctByCedulaAndCreatedAtBetween(Timestamp start, Timestamp end) {
@@ -111,12 +84,6 @@ public class ParticipanteImpl implements ParticipantePersistence {
         actualParticipante.setEstado(participante.getEstado());
         actualParticipante.setUpdatedAt(participante.getUpdatedAt());
         return participanteRepository.save(actualParticipante);
-    }
-
-    @Override
-    public List<Participante> getParticipanteBetweenAndTipoServicio(Timestamp start, Timestamp end, String tiposervicio) {
-        participanteRepository.findByCreatedAtBetween(start,end);
-        return participanteRepository.findByTiposervicioIdAndCreatedAtBetween(Long.parseLong(tiposervicio),start,end);
     }
 
     @Override

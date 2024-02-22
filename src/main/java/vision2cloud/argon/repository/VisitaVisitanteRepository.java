@@ -15,6 +15,6 @@ public interface VisitaVisitanteRepository extends JpaRepository<VisitaVisitante
 
     List<VisitaVisitante> findByCursoCodigoAndDiaInicioBetweenOrDiaFinBetween(String codigo1, Timestamp startInicio, Timestamp endInicio, Timestamp startFin, Timestamp endFin);
 
-    List<VisitaVisitante> findByTipoServicioAndDiaInicioBetweenOrDiaFinBetween(long codigo1, Timestamp startInicio, Timestamp endInicio, Timestamp startFin, Timestamp endFin);
-    List<VisitaVisitante> findByEmpresaAndDiaInicioBetweenOrDiaFinBetween(String codigo1, Timestamp startInicio, Timestamp endInicio, Timestamp startFin, Timestamp endFin);
+    List<VisitaVisitante> findByTiposervicioIdAndDiaInicioBetweenOrDiaFinBetween(long codigo1, Timestamp startInicio, Timestamp endInicio, Timestamp startFin, Timestamp endFin);
+    List<VisitaVisitante> findByEmpresaNitAndDiaInicioBetweenOrDiaFinBetween(String codigo1, Timestamp startInicio, Timestamp endInicio, Timestamp startFin, Timestamp endFin);
 }
