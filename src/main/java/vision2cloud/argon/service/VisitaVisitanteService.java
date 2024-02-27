@@ -402,16 +402,28 @@ public class VisitaVisitanteService {
         LocalDate timestampDateStart = start.toLocalDateTime().toLocalDate();
         LocalDate timestampDateEnd = end.toLocalDateTime().toLocalDate();
         LocalDate today = LocalDate.now();
+
+        System.out.println("---------------------------------------------------Cursos--------------------------------------------------------");
         for (Curso curso : cursos) {
+            System.out.println(curso.toString());
             visitaVisitantes.addAll(visitaVisitanteImpl.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(start, end, curso.getCodigo()));
         }
+
         for (Timestamp date = start; date.before(end) || date.equals(end); date.setTime(date.getTime() + unDiaEnMillis)) {
+            System.out.println("---------------------------------------------------VisitaVisitantes--------------------------------------------------------");
             for (VisitaVisitante vistante : visitaVisitantes) {
+                System.out.println(vistante.toString());
                 // Verificar si la fecha está dentro de los límites de fechainicio y fechafin
                 if (date.equals(vistante.getDiaInicio()) || (date.after(vistante.getDiaInicio()) && date.before(vistante.getDiaFin())) || date.equals(vistante.getDiaFin())) {
+                    System.out.println("---------------------------------------------------DateIn--------------------------------------------------------");
                     // La fecha está dentro del rango de fechas de la visita
                     transactions = transactionImpl.get(vistante.getVisitanteId().toString(), dateFormat.format(date), dateFormat.format(date.getTime() + unDiaEnMillis));
                     if(!transactions.isEmpty()) {
+                        System.out.println("---------------------------------------------------TransNotEmpty--------------------------------------------------------");
+                        System.out.println(cursosCantidad.containsKey(vistante.getTiposervicio().getNombre()));
+                        System.out.println(today.isEqual(timestampDateStart));
+                        System.out.println(today.isEqual(timestampDateEnd));
+                        System.out.println(transactions.get(1).getEventPointName().contains("Entrada"));
                         if ((cursosCantidad.containsKey(vistante.getTiposervicio().getNombre()) &&
                                 ((today.isEqual(timestampDateStart) && today.isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
                                         !today.isEqual(timestampDateStart) || !today.isEqual(timestampDateEnd)))) {
@@ -430,12 +442,16 @@ public class VisitaVisitanteService {
             }
         }
 
+        System.out.println("---------------------------------------------------KeySet--------------------------------------------------------");
         List<String> servicios = new ArrayList<>(cursosCantidad.keySet());
+        System.out.println("---------------------------------------------------Values--------------------------------------------------------");
         List<Integer> cantidad = new ArrayList<>(cursosCantidad.values());
         for (int i=0; i<servicios.size(); i++){
             servicios.set(i, servicios.get((i))+": "+cantidad.get(i));
         }
+        System.out.println("---------------------------------------------------Servicios--------------------------------------------------------");
         response.add(servicios);
+        System.out.println("---------------------------------------------------Cantidad--------------------------------------------------------");
         response.add(cantidad);
 
         return response;
