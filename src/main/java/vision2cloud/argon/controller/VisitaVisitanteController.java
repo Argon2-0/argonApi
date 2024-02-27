@@ -32,6 +32,7 @@ public class VisitaVisitanteController {
     @ResponseBody
     public ResponseEntity<?> create(@RequestBody VisitaVisitante visitaVisitante) {
         try {
+            System.out.println("visitaVisitanteController");
             System.out.println(visitaVisitante.toString());
             //obtener datos que se enviarán a través del API
             ArrayList<String> respuesta = validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),

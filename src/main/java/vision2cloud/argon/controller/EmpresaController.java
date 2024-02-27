@@ -32,6 +32,7 @@ public class EmpresaController {
     @ResponseBody
     public ResponseEntity<?> create(@RequestBody Empresa empresa) {
         try {
+            System.out.println("createController");
             //obtener datos que se enviarán a través del API
             ArrayList<String> respuesta = validaciones.TokenValidation(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"),
                     Long.valueOf(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("LastTime")),

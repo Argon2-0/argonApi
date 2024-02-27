@@ -18,6 +18,7 @@ public class EmpresaService {
     EmpresaImpl empresaImpl;
 
     public Object create(Empresa item) {
+        System.out.println("createService");
         return empresaImpl.create(item);
     }
 
