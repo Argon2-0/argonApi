@@ -13,7 +13,7 @@ public class VisitaVisitante {
     @Column(name = "visitanteId")
     private Long visitanteId;
     @ManyToOne
-    private Curso Curso;
+    private Curso curso;
     @ManyToOne
     private TipoServicio tiposervicio;
     @ManyToOne
@@ -26,16 +26,16 @@ public class VisitaVisitante {
     public VisitaVisitante() {
     }
 
-    public VisitaVisitante(Long visitanteId, Curso Curso, TipoServicio tiposervicio, Timestamp diaInicio, Timestamp diaFin) {
+    public VisitaVisitante(Long visitanteId, Curso curso, TipoServicio tiposervicio, Timestamp diaInicio, Timestamp diaFin) {
         this.visitanteId = visitanteId;
-        this.Curso= Curso;
+        this.curso= curso;
         this.tiposervicio = tiposervicio;
         this.diaInicio = diaInicio;
         this.diaFin = diaFin;
     }
     public VisitaVisitante(Long visitanteId, Curso curso, TipoServicio tiposervicio, Empresa empresa, Timestamp diaInicio, Timestamp diaFin) {
         this.visitanteId = visitanteId;
-        this.Curso= Curso;
+        this.curso= curso;
         this.tiposervicio = tiposervicio;
         this.empresa = empresa;
         this.diaInicio = diaInicio;
@@ -45,7 +45,7 @@ public class VisitaVisitante {
     public VisitaVisitante(long id, Long visitanteId, Curso curso, TipoServicio tiposervicio, Empresa empresa, Timestamp diaInicio, Timestamp diaFin) {
         this.id = id;
         this.visitanteId = visitanteId;
-        this.Curso = Curso;
+        this.curso = curso;
         this.tiposervicio = tiposervicio;
         this.empresa = empresa;
         this.diaInicio = diaInicio;
@@ -69,11 +69,11 @@ public class VisitaVisitante {
     }
 
     public Curso getCurso() {
-        return Curso;
+        return curso;
     }
 
-    public void setCurso(Curso Curso) {
-        this.Curso = Curso;
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
     public Timestamp getDiaInicio() {
@@ -113,7 +113,7 @@ public class VisitaVisitante {
         return "VisitaVisitante{" +
                 "id=" + id +
                 ", visitanteId=" + visitanteId +
-                ", cursoCodigo='" + Curso + '\'' +
+                ", curso='" + curso + '\'' +
                 ", tiposervicio=" + tiposervicio +
                 ", empresa=" + empresa +
                 ", diaInicio=" + diaInicio +
