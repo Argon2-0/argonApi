@@ -13,6 +13,9 @@ import vision2cloud.argon.service.validaciones.Validaciones;
 import vision2cloud.argon.model.RegistroCurso;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -357,10 +360,17 @@ public class VisitaVisitanteController {
             //obtener datos que se enviarán a través del API
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
-
+                // Convertir el timestamp a un objeto LocalDateTime
+                LocalDateTime startdateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(start), null);
+                LocalDateTime enddateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(start), null);
+                startdateTime = startdateTime.withHour(0).withMinute(0).withSecond(0).withNano(0);
+                enddateTime = enddateTime.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1);
+                System.out.println("--------------------------------------------------datees--------------------------------------------");
+                System.out.println(startdateTime);
+                System.out.println(enddateTime);
                 ArrayList<Object> response = new ArrayList<Object>();
-                response.add( respuesta.get(1));
-                response.add(visitaVisitanteService.findBetweenCursos(new Timestamp(start), new Timestamp(end)));
+                response.add(respuesta.get(1));
+                response.add(visitaVisitanteService.findBetweenCursos(Timestamp.valueOf(startdateTime), Timestamp.valueOf(enddateTime)));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
             }

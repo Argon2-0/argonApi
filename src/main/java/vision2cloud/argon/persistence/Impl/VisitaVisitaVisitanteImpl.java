@@ -52,7 +52,8 @@ public class VisitaVisitaVisitanteImpl implements VisitaVisitantePersistence {
 
     @Override
     public List<VisitaVisitante> findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(Timestamp start, Timestamp end, String codigo) {
-        return visitanteCursoRepository.findByCursoCodigoAndDiaInicioBetweenOrDiaFinBetween(codigo, start, end, start, end);
+        System.out.println(codigo);
+        return visitanteCursoRepository.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(codigo, start, end, start, end);
     }
 
     @Override
