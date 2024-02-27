@@ -15,6 +15,7 @@ import vision2cloud.argon.model.RegistroCurso;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -361,8 +362,10 @@ public class VisitaVisitanteController {
             String rolId = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("id");
             if(Boolean.parseBoolean(respuesta.get(0)) && (rolId.equals("1") || rolId.equals("2") || rolId.equals("3"))){
                 // Convertir el timestamp a un objeto LocalDateTime
-                LocalDateTime startdateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(start), null);
-                LocalDateTime enddateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(start), null);
+                Instant instantStart = Instant.ofEpochSecond(start);
+                Instant instantEnd = Instant.ofEpochSecond(end);
+                LocalDateTime startdateTime = LocalDateTime.ofInstant(instantStart, ZoneId.systemDefault());
+                LocalDateTime enddateTime = LocalDateTime.ofInstant(instantEnd, ZoneId.systemDefault());
                 startdateTime = startdateTime.withHour(0).withMinute(0).withSecond(0).withNano(0);
                 enddateTime = enddateTime.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1);
                 System.out.println("--------------------------------------------------datees--------------------------------------------");
