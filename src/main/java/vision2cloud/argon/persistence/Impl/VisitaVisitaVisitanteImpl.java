@@ -53,6 +53,10 @@ public class VisitaVisitaVisitanteImpl implements VisitaVisitantePersistence {
     @Override
     public List<VisitaVisitante> findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(Timestamp start, Timestamp end, String codigo) {
         System.out.println(codigo);
+        List<VisitaVisitante> vi = visitanteCursoRepository.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(codigo, start, end, start, end);
+        for (VisitaVisitante visitaVisitante : vi){
+            System.out.println(visitaVisitante.toString());
+        }
         return visitanteCursoRepository.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(codigo, start, end, start, end);
     }
 
