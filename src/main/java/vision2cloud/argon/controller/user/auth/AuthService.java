@@ -12,8 +12,10 @@ import vision2cloud.argon.service.user.UserInfoService;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +45,9 @@ public class AuthService {
 
     public Token TokenGenerator(UserInfo usuario)
     {
-        LocalDateTime expirationLocalDate = LocalDateTime.now();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime nowColombia = ZonedDateTime.now(zonaColombia);
+        LocalDateTime expirationLocalDate = nowColombia.toLocalDateTime();
         System.out.println(expirationLocalDate);
         expirationLocalDate = expirationLocalDate.plusMinutes(TOKEN_DURATION_MINUTES );
         Timestamp timeExpiration = Timestamp.valueOf(expirationLocalDate);
@@ -74,7 +78,7 @@ public class AuthService {
         System.out.println("JWT Body : "+body);
 
         String[] bodyseparate = body.replace("\"","").replace("{","").replace("}","").split(",");
-
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
         Timestamp dueDate = null;
         Long milis = 0L;
         String email = "";
@@ -88,7 +92,10 @@ public class AuthService {
                 System.out.println(intern[0]);
                 System.out.println(intern[1]);
                 milis = Long.valueOf(intern[1]);
-                Timestamp dueTime = new Timestamp(milis*1000);
+                Timestamp dueTimeUnset = new Timestamp(milis*1000);
+                Instant instantLastTime = dueTimeUnset.toInstant();
+                ZonedDateTime zonedDateDueTime = instantLastTime.atZone(zonaColombia);
+                Timestamp dueTime = Timestamp.valueOf(zonedDateDueTime.toLocalDateTime());
                 System.out.println(dueTime);
                 System.out.println(dueTime.toLocalDateTime());
                 if(currentTime.before(dueTime) || (lastTime.before(dueTime) && currentTime.toLocalDateTime().isBefore(lastTime.toLocalDateTime().plusMinutes(TOKEN_DURATION_MINUTES)))){

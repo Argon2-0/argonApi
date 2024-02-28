@@ -11,6 +11,9 @@ import vision2cloud.argon.persistence.Impl.HerramientaParticipanteImpl;
 import vision2cloud.argon.persistence.Impl.ParticipanteImpl;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service("HerramientaParticipanteService")
@@ -59,16 +62,29 @@ public class HerramientaParticipanteService {
 
     public List<HerramientaParticipante> findByCreatedAtBetweenAndMarca(Timestamp start, Timestamp end, String marca) {
 
-
+        Instant instantStart = start.toInstant();
+        Instant instantEnd = end.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
         if(marca.equals("Todas")){
-            return herramientaParticipanteImpl.getHerramientaCreatedAtBetween(start, end);
+            return herramientaParticipanteImpl.getHerramientaCreatedAtBetween(newStart, newEnd);
         }
         List<Herramienta> herramientasByMarca = herramientaImpl.findByMarca(marca);
-        return herramientaParticipanteImpl.findByCreatedAtBetweenAndMarca(start,end,herramientasByMarca);
+        return herramientaParticipanteImpl.findByCreatedAtBetweenAndMarca(newStart,newEnd,herramientasByMarca);
     }
 
     public List<Object> getDataForDashboard(Timestamp start, Timestamp end) {
-        return herramientaParticipanteImpl.getDataForDashboard(start,end);
+        Instant instantStart = start.toInstant();
+        Instant instantEnd = end.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        return herramientaParticipanteImpl.getDataForDashboard(newStart,newEnd);
     }
 
     public int findByParticipanteIdAndEstado(String tipoDocumento, long documento, String estado){

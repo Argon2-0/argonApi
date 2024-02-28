@@ -88,6 +88,15 @@ public class VisitaVisitanteService {
         List<Curso> cursos = new ArrayList<>();
         List<Transaction> transactions = new ArrayList<>();
         Participante participante = null;
+
+        Instant instantStart = start.toInstant();
+        Instant instantEnd = end.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+
         if (codigo.equals("Todos")) {
             cursos = cursoImpl.getCursos();
         } else {
@@ -96,7 +105,7 @@ public class VisitaVisitanteService {
         for (Curso curso : cursos) {
             visitaVisitantes.addAll(visitaVisitanteImpl.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(start, end, curso.getCodigo()));
         }
-        for (Timestamp date = start; date.before(end) || date.equals(end); date.setTime(date.getTime() + unDiaEnMillis)) {
+        for (Timestamp date = newStart; date.before(newEnd) || date.equals(newEnd); date.setTime(date.getTime() + unDiaEnMillis)) {
             for (VisitaVisitante vistante : visitaVisitantes) {
                 // Verificar si la fecha está dentro de los límites de fechainicio y fechafin
                 if (date.equals(vistante.getDiaInicio()) || (date.after(vistante.getDiaInicio()) && date.before(vistante.getDiaFin())) || date.equals(vistante.getDiaFin())) {
@@ -137,6 +146,15 @@ public class VisitaVisitanteService {
         List<TipoServicio> tiposServicio = new ArrayList<>();
         List<Transaction> transactions = new ArrayList<>();
         Participante participante = null;
+
+        Instant instantStart = start.toInstant();
+        Instant instantEnd = end.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+
         if (codigo.equals("Todos")) {
             tiposServicio = tipoServicioImpl.getTiposServicios();
         } else {
@@ -145,7 +163,7 @@ public class VisitaVisitanteService {
         for (TipoServicio tipoServicio : tiposServicio) {
             visitaVisitantes.addAll(visitaVisitanteImpl.findByTipoServicioLikeAndDiaInicioBetweenOrDiaFinBetween(start, end, tipoServicio.getId()));
         }
-        for (Timestamp date = start; date.before(end) || date.equals(end); date.setTime(date.getTime() + unDiaEnMillis)) {
+        for (Timestamp date = newStart; date.before(newEnd) || date.equals(newEnd); date.setTime(date.getTime() + unDiaEnMillis)) {
             for (VisitaVisitante vistante : visitaVisitantes) {
                 // Verificar si la fecha está dentro de los límites de fechainicio y fechafin
                 if (date.equals(vistante.getDiaInicio()) || (date.after(vistante.getDiaInicio()) && date.before(vistante.getDiaFin())) || date.equals(vistante.getDiaFin())) {
@@ -185,6 +203,15 @@ public class VisitaVisitanteService {
         List<Empresa> empresas = new ArrayList<>();
         List<Transaction> transactions = new ArrayList<>();
         Participante participante = null;
+
+        Instant instantStart = start.toInstant();
+        Instant instantEnd = end.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+
         if (codigo.equals("Todos")) {
             empresas = empresaImpl.getEmpresas();
         } else {
@@ -193,7 +220,7 @@ public class VisitaVisitanteService {
         for (Empresa empresa : empresas) {
             visitaVisitantes.addAll(visitaVisitanteImpl.findByEmpesaLikeAndDiaInicioBetweenOrDiaFinBetween(start, end, empresa.getNit()));
         }
-        for (Timestamp date = start; date.before(end) || date.equals(end); date.setTime(date.getTime() + unDiaEnMillis)) {
+        for (Timestamp date = newStart; date.before(newEnd) || date.equals(newEnd); date.setTime(date.getTime() + unDiaEnMillis)) {
             for (VisitaVisitante vistante : visitaVisitantes) {
                 // Verificar si la fecha está dentro de los límites de fechainicio y fechafin
                 if (date.equals(vistante.getDiaInicio()) || (date.after(vistante.getDiaInicio()) && date.before(vistante.getDiaFin())) || date.equals(vistante.getDiaFin())) {
@@ -233,7 +260,16 @@ public class VisitaVisitanteService {
         List<ReportesInforme> reportesInforme = new ArrayList<>();
         List<Transaction> transactions = new ArrayList<>();
         Participante participante = null;
-        for (Timestamp date = start; date.before(end) || date.equals(end); date.setTime(date.getTime() + unDiaEnMillis)) {
+
+        Instant instantStart = start.toInstant();
+        Instant instantEnd = end.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+
+        for (Timestamp date = newStart; date.before(newEnd) || date.equals(newEnd); date.setTime(date.getTime() + unDiaEnMillis)) {
             for (VisitaVisitante vistante : visitaVisitantes) {
                 // Verificar si la fecha está dentro de los límites de fechainicio y fechafin
                 if (date.equals(vistante.getDiaInicio()) || (date.after(vistante.getDiaInicio()) && date.before(vistante.getDiaFin())) || date.equals(vistante.getDiaFin())) {
@@ -277,12 +313,21 @@ public class VisitaVisitanteService {
         List<PrestamosInforme> prestamosInforme = new ArrayList<>();
         List<Transaction> transactions = new ArrayList<>();
         Participante participante = null;
+
+        Instant instantStart = start.toInstant();
+        Instant instantEnd = end.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+
         if (marca.equals("Todos")) {
             herramientas = herramientaImpl.getHerramientas();
         } else {
             herramientas = herramientaImpl.findByMarca(marca);
         }
-        List<HerramientaParticipante> herramientasParticipantes = new ArrayList<>(herramientaParticipanteImpl.findByCreatedAtBetweenAndMarca(start, end, herramientas));
+        List<HerramientaParticipante> herramientasParticipantes = new ArrayList<>(herramientaParticipanteImpl.findByCreatedAtBetweenAndMarca(newStart, newEnd, herramientas));
 
         for (HerramientaParticipante herramientaParticipante : herramientasParticipantes) {
 
@@ -325,7 +370,7 @@ public class VisitaVisitanteService {
         // Convertir el LocalDateTime de nuevo a Timestamp
         Timestamp startTimestamp = Timestamp.valueOf(localDateTimeStart);
         // Convertir el Timestamp a LocalDateTime
-        LocalDateTime localDateTimeEnd = zonedDateTimeEnd.toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime localDateTimeEnd = zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
         // Convertir el LocalDateTime de nuevo a Timestamp
         Timestamp endTimestamp = Timestamp.valueOf(localDateTimeEnd);
         List<Object> response = new ArrayList<Object>();
@@ -358,12 +403,14 @@ public class VisitaVisitanteService {
         ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
         ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
         LocalDateTime timestampDateStart = zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
-        LocalDateTime timestampDateEnd = zonedDateTimeEnd.toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime timestampDateEnd = zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime today = nowColombia.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
         for (TipoServicio tipoServicio : tiposServicio) {
             visitaVisitantes.addAll(visitaVisitanteImpl.findByTipoServicioLikeAndDiaInicioBetweenOrDiaFinBetween(start, end, tipoServicio.getId()));
         }
-        for (Timestamp date = start; date.before(end) || date.equals(end); date.setTime(date.getTime() + unDiaEnMillis)) {
+        for (Timestamp date = newStart; date.before(newEnd) || date.equals(newEnd); date.setTime(date.getTime() + unDiaEnMillis)) {
             for (VisitaVisitante vistante : visitaVisitantes) {
                 // Verificar si la fecha está dentro de los límites de fechainicio y fechafin
                 if (date.equals(vistante.getDiaInicio()) || (date.after(vistante.getDiaInicio()) && date.before(vistante.getDiaFin())) || date.equals(vistante.getDiaFin())) {
@@ -371,11 +418,11 @@ public class VisitaVisitanteService {
                     transactions = transactionImpl.get(vistante.getVisitanteId().toString(), dateFormat.format(date), dateFormat.format(date.getTime() + unDiaEnMillis));
                     if(!transactions.isEmpty()) {
                         if ((serviciosCantidad.containsKey(vistante.getTiposervicio().getNombre()) &&
-                                ((today.isEqual(timestampDateStart) && today.minusDays(1).isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
+                                ((today.isEqual(timestampDateStart) && today.isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
                                 !today.isEqual(timestampDateStart) || !today.isEqual(timestampDateEnd)))) {
                             serviciosCantidad.put(vistante.getTiposervicio().getNombre(), serviciosCantidad.get(vistante.getTiposervicio().getNombre())+1);
                         }else {
-                            if((today.isEqual(timestampDateStart) && today.minusDays(1).isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
+                            if((today.isEqual(timestampDateStart) && today.isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
                                     !today.isEqual(timestampDateStart) || !today.isEqual(timestampDateEnd)){
                                 serviciosCantidad.put(vistante.getTiposervicio().getNombre(),1);
                             }
@@ -413,10 +460,10 @@ public class VisitaVisitanteService {
         ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
         ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
         LocalDateTime timestampDateStart = zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
-        LocalDateTime timestampDateEnd = zonedDateTimeEnd.toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime timestampDateEnd = zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime today = nowColombia.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
         Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
-        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime());
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
         System.out.println(today);
         System.out.println(timestampDateStart);
         System.out.println(timestampDateEnd);
@@ -445,11 +492,11 @@ public class VisitaVisitanteService {
                         System.out.println(today.isEqual(timestampDateEnd));
                         System.out.println(transactions.get(1).getEventPointName().contains("Entrada"));
                         if ((cursosCantidad.containsKey(vistante.getTiposervicio().getNombre()) &&
-                                ((today.isEqual(timestampDateStart) && today.minusDays(1).isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
+                                ((today.isEqual(timestampDateStart) && today.isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
                                         !today.isEqual(timestampDateStart) || !today.isEqual(timestampDateEnd)))) {
                             cursosCantidad.put(vistante.getCurso().getNombre(), cursosCantidad.get(vistante.getCurso().getNombre())+1);
                         }else {
-                            if((today.isEqual(timestampDateStart) && today.minusDays(1).isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
+                            if((today.isEqual(timestampDateStart) && today.isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
                                     !today.isEqual(timestampDateStart) || !today.isEqual(timestampDateEnd)){
                                 cursosCantidad.put(vistante.getCurso().getNombre(),1);
                             }
@@ -481,7 +528,14 @@ public class VisitaVisitanteService {
         List<Integer> response = new ArrayList<>(Arrays.asList(0,0));
         List<Transaction> transactions = new ArrayList<>();
         List<VisitaVisitante> visitaVisitantes = new ArrayList<>(visitaVisitanteImpl.findByDiaInicioBetweenOrDiaFinBetween(start, end));
-        for (Timestamp date = start; date.before(end) || date.equals(end); date.setTime(date.getTime() + unDiaEnMillis)) {
+        Instant instantStart = start.toInstant();
+        Instant instantEnd = end.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        for (Timestamp date = newStart; date.before(newEnd) || date.equals(newEnd); date.setTime(date.getTime() + unDiaEnMillis)) {
             for (VisitaVisitante vistante : visitaVisitantes) {
                 // Verificar si la fecha está dentro de los límites de fechainicio y fechafin
                 if (date.equals(vistante.getDiaInicio()) || (date.after(vistante.getDiaInicio()) && date.before(vistante.getDiaFin())) || date.equals(vistante.getDiaFin())) {

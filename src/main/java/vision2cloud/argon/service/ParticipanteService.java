@@ -9,6 +9,7 @@ import vision2cloud.argon.persistence.Impl.ParticipanteImpl;
 import vision2cloud.argon.persistence.Impl.TipoServicioImpl;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -75,7 +76,14 @@ public class ParticipanteService {
 
 
     public List<Participante> getParticipanteBetween(Timestamp start, Timestamp end) {
-        return participanteImpl.getParticipanteBetween(start, end);
+        Instant instantStart = start.toInstant();
+        Instant instantEnd = end.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        return participanteImpl.getParticipanteBetween(newStart, newEnd);
     }
 
     public List<EmpresaReporte> getEmpresasByParticipanteBetween(Timestamp start, Timestamp end) {
@@ -99,7 +107,14 @@ public class ParticipanteService {
     }
 
     public List<Object> findDistinctByCedulaAndCreatedAtBetween(Timestamp start, Timestamp end) {
-        return participanteImpl.findDistinctByCedulaAndCreatedAtBetween(start, end);
+        Instant instantStart = start.toInstant();
+        Instant instantEnd = end.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        return participanteImpl.findDistinctByCedulaAndCreatedAtBetween(newStart, newEnd);
     }
 
     public Object update(Participante participante) {
