@@ -92,13 +92,13 @@ public class HerramientaParticipanteImpl implements HerramientaParticipantePersi
     @Override
     public List<Object> getDataForDashboard(Timestamp startTime, Timestamp endTime) {
         // Convertir el Timestamp a LocalDateTime
-        LocalDateTime localDateTimeStart = startTime.toLocalDateTime();
+        LocalDateTime localDateTimeStart = startTime.toLocalDateTime().minusHours(5);
         // Establecer la hora al inicio del día (medianoche)
         LocalDateTime start = localDateTimeStart.with(LocalTime.MIN);
         // Convertir el LocalDateTime de nuevo a Timestamp
         Timestamp startTimestamp = Timestamp.valueOf(start);
         // Convertir el Timestamp a LocalDateTime
-        LocalDateTime localDateTimeEnd = endTime.toLocalDateTime();
+        LocalDateTime localDateTimeEnd = endTime.toLocalDateTime().minusHours(5);
         // Establecer la hora al inicio del día (medianoche)
         LocalDateTime end = localDateTimeEnd.with(LocalTime.MIN).plusDays(1);
         // Convertir el LocalDateTime de nuevo a Timestamp

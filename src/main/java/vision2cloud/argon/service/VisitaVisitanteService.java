@@ -316,13 +316,13 @@ public class VisitaVisitanteService {
 
     public List<Object> findBetweens(Timestamp startTime, Timestamp endTime) {
         List<Curso> cursos = cursoImpl.getCursos();
-        LocalDateTime localDateTimeStart = startTime.toLocalDateTime();
+        LocalDateTime localDateTimeStart = startTime.toLocalDateTime().minusHours(5);
         // Establecer la hora al inicio del día (medianoche)
         LocalDateTime start = localDateTimeStart.with(LocalTime.MIN);
         // Convertir el LocalDateTime de nuevo a Timestamp
         Timestamp startTimestamp = Timestamp.valueOf(start);
         // Convertir el Timestamp a LocalDateTime
-        LocalDateTime localDateTimeEnd = endTime.toLocalDateTime();
+        LocalDateTime localDateTimeEnd = endTime.toLocalDateTime().minusHours(5);
         // Establecer la hora al inicio del día (medianoche)
         LocalDateTime end = localDateTimeEnd.with(LocalTime.MIN).plusDays(1);
         // Convertir el LocalDateTime de nuevo a Timestamp
@@ -350,8 +350,8 @@ public class VisitaVisitanteService {
         List<Object> response = new ArrayList<Object>();
         HashMap<String, Integer> serviciosCantidad = new HashMap<String, Integer>();
         List<Transaction> transactions = new ArrayList<>();
-        LocalDate timestampDateStart = start.toLocalDateTime().toLocalDate();
-        LocalDate timestampDateEnd = end.toLocalDateTime().toLocalDate();
+        LocalDate timestampDateStart = start.toLocalDateTime().minusHours(5).toLocalDate();
+        LocalDate timestampDateEnd = end.toLocalDateTime().minusHours(5).toLocalDate();
         LocalDate today = LocalDate.now();
         for (TipoServicio tipoServicio : tiposServicio) {
             visitaVisitantes.addAll(visitaVisitanteImpl.findByTipoServicioLikeAndDiaInicioBetweenOrDiaFinBetween(start, end, tipoServicio.getId()));
@@ -399,10 +399,10 @@ public class VisitaVisitanteService {
         HashMap<String, Integer> cursosCantidad = new HashMap<String, Integer>();
 
         List<Transaction> transactions = new ArrayList<>();
-        System.out.println(start.toLocalDateTime());
-        System.out.println(end.toLocalDateTime());
-        LocalDateTime timestampDateStart = start.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
-        LocalDateTime timestampDateEnd = end.toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        System.out.println(start.toLocalDateTime().minusHours(5));
+        System.out.println(end.toLocalDateTime().minusHours(5));
+        LocalDateTime timestampDateStart = start.toLocalDateTime().minusHours(5).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime timestampDateEnd = end.toLocalDateTime().plusDays(1).minusHours(5).withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
 
         System.out.println(today);
