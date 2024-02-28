@@ -415,20 +415,21 @@ public class VisitaVisitanteService {
         LocalDateTime timestampDateStart = zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime timestampDateEnd = zonedDateTimeEnd.toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime today = nowColombia.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
-
+        Timestamp newStart = Timestamp.valueOf(zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        Timestamp newEnd = Timestamp.valueOf(zonedDateTimeEnd.toLocalDateTime());
         System.out.println(today);
         System.out.println(timestampDateStart);
         System.out.println(timestampDateEnd);
         System.out.println("---------------------------------------------------Cursos--------------------------------------------------------");
         for (Curso curso : cursos) {
             System.out.println(curso.toString());
-            visitaVisitantes.addAll(visitaVisitanteImpl.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(start, end, curso.getCodigo()));
+            visitaVisitantes.addAll(visitaVisitanteImpl.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(newStart, newEnd, curso.getCodigo()));
         }
         System.out.println("---------------------------------------------------VisitaVisitantesasdafss--------------------------------------------------------");
         for (VisitaVisitante vistante : visitaVisitantes) {
             System.out.println(vistante.toString());
         }
-        for (Timestamp date = start; date.before(end) || date.equals(end); date.setTime(date.getTime() + unDiaEnMillis)) {
+        for (Timestamp date = newStart; date.before(newEnd) || date.equals(newEnd); date.setTime(date.getTime() + unDiaEnMillis)) {
             System.out.println("---------------------------------------------------VisitaVisitantes--------------------------------------------------------");
             for (VisitaVisitante vistante : visitaVisitantes) {
                 System.out.println(vistante.toString());
