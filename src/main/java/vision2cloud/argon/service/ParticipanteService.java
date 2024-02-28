@@ -10,6 +10,8 @@ import vision2cloud.argon.persistence.Impl.TipoServicioImpl;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,7 +64,11 @@ public class ParticipanteService {
     }
 
     public List<Participante> getParticipanteToday() {
-        LocalDate ld = LocalDate.now();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        // Obtener la fecha y hora actual en la zona horaria de Colombia
+        ZonedDateTime nowColombia = ZonedDateTime.now(zonaColombia);
+        LocalDate ld = nowColombia.toLocalDate();
+        System.out.println(ld);
         Timestamp start = Timestamp.valueOf(ld.atStartOfDay());
         Timestamp end = Timestamp.valueOf(ld.plusDays(1).atStartOfDay());
         return participanteImpl.getParticipanteBetween(start, end);
