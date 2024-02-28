@@ -403,12 +403,18 @@ public class VisitaVisitanteService {
         LocalDateTime timestampDateEnd = end.toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
 
+        System.out.println(today);
+        System.out.println(timestampDateStart);
+        System.out.println(timestampDateEnd);
         System.out.println("---------------------------------------------------Cursos--------------------------------------------------------");
         for (Curso curso : cursos) {
             System.out.println(curso.toString());
             visitaVisitantes.addAll(visitaVisitanteImpl.findByCursoCodigoLikeAndDiaInicioBetweenOrDiaFinBetween(start, end, curso.getCodigo()));
         }
-
+        System.out.println("---------------------------------------------------VisitaVisitantesasdafss--------------------------------------------------------");
+        for (VisitaVisitante vistante : visitaVisitantes) {
+            System.out.println(vistante.toString());
+        }
         for (Timestamp date = start; date.before(end) || date.equals(end); date.setTime(date.getTime() + unDiaEnMillis)) {
             System.out.println("---------------------------------------------------VisitaVisitantes--------------------------------------------------------");
             for (VisitaVisitante vistante : visitaVisitantes) {
