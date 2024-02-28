@@ -399,6 +399,8 @@ public class VisitaVisitanteService {
         HashMap<String, Integer> cursosCantidad = new HashMap<String, Integer>();
 
         List<Transaction> transactions = new ArrayList<>();
+        System.out.println(start.toLocalDateTime());
+        System.out.println(end.toLocalDateTime());
         LocalDateTime timestampDateStart = start.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime timestampDateEnd = end.toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
