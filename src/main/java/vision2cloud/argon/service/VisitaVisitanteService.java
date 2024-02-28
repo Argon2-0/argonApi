@@ -438,7 +438,7 @@ public class VisitaVisitanteService {
                     System.out.println("---------------------------------------------------DateIn--------------------------------------------------------");
                     // La fecha está dentro del rango de fechas de la visita
                     transactions = transactionImpl.get(vistante.getVisitanteId().toString(), dateFormat.format(date), dateFormat.format(date.getTime() + unDiaEnMillis));
-                    if(!transactions.isEmpty()) {
+                    if(transactions!= null && !transactions.isEmpty()) {
                         System.out.println("---------------------------------------------------TransNotEmpty--------------------------------------------------------");
                         System.out.println(cursosCantidad.containsKey(vistante.getTiposervicio().getNombre()));
                         System.out.println(today.isEqual(timestampDateStart));
