@@ -399,9 +399,9 @@ public class VisitaVisitanteService {
         HashMap<String, Integer> cursosCantidad = new HashMap<String, Integer>();
 
         List<Transaction> transactions = new ArrayList<>();
-        LocalDate timestampDateStart = start.toLocalDateTime().toLocalDate();
-        LocalDate timestampDateEnd = end.toLocalDateTime().toLocalDate();
-        LocalDate today = LocalDate.now();
+        LocalDateTime timestampDateStart = start.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime timestampDateEnd = end.toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
 
         System.out.println("---------------------------------------------------Cursos--------------------------------------------------------");
         for (Curso curso : cursos) {
@@ -425,11 +425,11 @@ public class VisitaVisitanteService {
                         System.out.println(today.isEqual(timestampDateEnd));
                         System.out.println(transactions.get(1).getEventPointName().contains("Entrada"));
                         if ((cursosCantidad.containsKey(vistante.getTiposervicio().getNombre()) &&
-                                ((today.isEqual(timestampDateStart) && today.isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
+                                ((today.isEqual(timestampDateStart) && today.minusDays(1).isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
                                         !today.isEqual(timestampDateStart) || !today.isEqual(timestampDateEnd)))) {
                             cursosCantidad.put(vistante.getCurso().getNombre(), cursosCantidad.get(vistante.getCurso().getNombre())+1);
                         }else {
-                            if((today.isEqual(timestampDateStart) && today.isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
+                            if((today.isEqual(timestampDateStart) && today.minusDays(1).isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
                                     !today.isEqual(timestampDateStart) || !today.isEqual(timestampDateEnd)){
                                 cursosCantidad.put(vistante.getCurso().getNombre(),1);
                             }
