@@ -10,6 +10,8 @@ import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 @Service("PersonService")
@@ -18,15 +20,17 @@ public class PersonService {
     @Qualifier("PersonImpl")
     PersonImpl personImpl;
     public Object create(Person person) throws URISyntaxException {
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime nowColombia = ZonedDateTime.now(zonaColombia);
         if(person.getAccStartTime().isEmpty() || person.getAccEndTime().isEmpty()){
-            LocalDate ld = LocalDate.now();
+            LocalDate ld = nowColombia.toLocalDate();
             System.out.println(ld);
             person.setAccStartTime(Timestamp.valueOf(ld.atStartOfDay()).toString());
             person.setAccEndTime(Timestamp.valueOf(ld.plusDays(1).atStartOfDay()).toString());
         }
-        else
-            person.setAccStartTime(Timestamp.valueOf(new Timestamp(Long.parseLong(person.getAccStartTime())).toLocalDateTime().minusHours(5)).toString());{
-            person.setAccEndTime(Timestamp.valueOf(new Timestamp(Long.parseLong(person.getAccEndTime())).toLocalDateTime().plusDays(1).minusHours(5)).toString());
+        else{
+            person.setAccStartTime(Timestamp.valueOf(new Timestamp(Long.parseLong(person.getAccStartTime())).toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0)).toString());
+            person.setAccEndTime(Timestamp.valueOf(new Timestamp(Long.parseLong(person.getAccEndTime())).toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0)).toString());
         }
         if(person.getEmail().isEmpty()){
             person.setEmail("123@zkt.com");
@@ -43,8 +47,10 @@ public class PersonService {
         System.out.println("---------------------------------------");
         System.out.println(person.toString());
         System.out.println("---------------------------------------");
-        LocalDateTime ldt = LocalDateTime.now();
-        LocalDate ld = LocalDate.now();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime nowColombia = ZonedDateTime.now(zonaColombia);
+        LocalDateTime ldt = nowColombia.toLocalDateTime();
+        LocalDate ld = nowColombia.toLocalDate();
         String nextDay = Timestamp.valueOf(ld.plusDays(1).atStartOfDay()).toString().split("\\.")[0];
         String now = String.valueOf(ldt).split("\\.")[0].replace("T", " ");
         System.out.println(ld);
@@ -64,8 +70,8 @@ public class PersonService {
     public Object createMasive(ArrayList<Person> persons) throws URISyntaxException {
         try {
             for (Person person : persons) {
-                person.setAccStartTime(Timestamp.valueOf(new Timestamp(Long.parseLong(person.getAccStartTime())).toLocalDateTime().minusHours(5)).toString());
-                person.setAccEndTime(Timestamp.valueOf(new Timestamp(Long.parseLong(person.getAccEndTime())).toLocalDateTime().plusDays(1).minusHours(5)).toString());
+                person.setAccStartTime(Timestamp.valueOf(new Timestamp(Long.parseLong(person.getAccStartTime())).toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0)).toString());
+                person.setAccEndTime(Timestamp.valueOf(new Timestamp(Long.parseLong(person.getAccEndTime())).toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0)).toString());
                 if (person.getEmail().equals("")) {
                     person.setEmail("123@zkt.com");
                 }

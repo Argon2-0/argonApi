@@ -90,8 +90,8 @@ public class AuthService {
                 milis = Long.valueOf(intern[1]);
                 Timestamp dueTime = new Timestamp(milis*1000);
                 System.out.println(dueTime);
-                System.out.println(dueTime.toLocalDateTime().minusHours(5));
-                if(currentTime.before(dueTime) || (lastTime.before(dueTime) && currentTime.toLocalDateTime().minusHours(5).isBefore(lastTime.toLocalDateTime().minusHours(5).plusMinutes(TOKEN_DURATION_MINUTES)))){
+                System.out.println(dueTime.toLocalDateTime());
+                if(currentTime.before(dueTime) || (lastTime.before(dueTime) && currentTime.toLocalDateTime().isBefore(lastTime.toLocalDateTime().plusMinutes(TOKEN_DURATION_MINUTES)))){
                     aprueba=true;
                 }
             }

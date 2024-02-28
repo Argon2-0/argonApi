@@ -9,9 +9,7 @@ import vision2cloud.argon.persistence.HerramientaParticipantePersistence;
 import vision2cloud.argon.repository.HerramientaParticipanteRepository;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +44,9 @@ public class HerramientaParticipanteImpl implements HerramientaParticipantePersi
 
     @Override
     public List<HerramientaParticipante> getHerramientaParticipanteToday() {
-        LocalDate ld = LocalDate.now();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime nowColombia = ZonedDateTime.now(zonaColombia);
+        LocalDate ld = nowColombia.toLocalDate();
         Timestamp start = Timestamp.valueOf(ld.atStartOfDay());
         Timestamp end = Timestamp.valueOf(ld.plusDays(1).atStartOfDay());
         return herramientaParticipanteRepository.findByCreatedAtBetween(start,end);
@@ -91,18 +91,19 @@ public class HerramientaParticipanteImpl implements HerramientaParticipantePersi
 
     @Override
     public List<Object> getDataForDashboard(Timestamp startTime, Timestamp endTime) {
+        Instant instantStart = startTime.toInstant();
+        Instant instantEnd = endTime.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
         // Convertir el Timestamp a LocalDateTime
-        LocalDateTime localDateTimeStart = startTime.toLocalDateTime().minusHours(5);
-        // Establecer la hora al inicio del día (medianoche)
-        LocalDateTime start = localDateTimeStart.with(LocalTime.MIN);
+        LocalDateTime localDateTimeStart = zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
         // Convertir el LocalDateTime de nuevo a Timestamp
-        Timestamp startTimestamp = Timestamp.valueOf(start);
+        Timestamp startTimestamp = Timestamp.valueOf(localDateTimeStart);
         // Convertir el Timestamp a LocalDateTime
-        LocalDateTime localDateTimeEnd = endTime.toLocalDateTime().minusHours(5);
-        // Establecer la hora al inicio del día (medianoche)
-        LocalDateTime end = localDateTimeEnd.with(LocalTime.MIN).plusDays(1);
+        LocalDateTime localDateTimeEnd = zonedDateTimeEnd.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
         // Convertir el LocalDateTime de nuevo a Timestamp
-        Timestamp endTimestamp = Timestamp.valueOf(end);
+        Timestamp endTimestamp = Timestamp.valueOf(localDateTimeEnd);
         List<Object> response = new ArrayList<Object>();
         List<Long> cedulas = new ArrayList<>();
         List<HerramientaParticipante> herramientaParticipantes = herramientaParticipanteRepository.findByCreatedAtBetween(startTimestamp,endTimestamp);

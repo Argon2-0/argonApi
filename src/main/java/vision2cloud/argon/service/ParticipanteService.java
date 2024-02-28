@@ -65,7 +65,6 @@ public class ParticipanteService {
 
     public List<Participante> getParticipanteToday() {
         ZoneId zonaColombia = ZoneId.of("America/Bogota");
-        // Obtener la fecha y hora actual en la zona horaria de Colombia
         ZonedDateTime nowColombia = ZonedDateTime.now(zonaColombia);
         LocalDate ld = nowColombia.toLocalDate();
         System.out.println(ld);

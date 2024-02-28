@@ -316,17 +316,18 @@ public class VisitaVisitanteService {
 
     public List<Object> findBetweens(Timestamp startTime, Timestamp endTime) {
         List<Curso> cursos = cursoImpl.getCursos();
-        LocalDateTime localDateTimeStart = startTime.toLocalDateTime().minusHours(5);
-        // Establecer la hora al inicio del día (medianoche)
-        LocalDateTime start = localDateTimeStart.with(LocalTime.MIN);
+        Instant instantStart = startTime.toInstant();
+        Instant instantEnd = endTime.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        LocalDateTime localDateTimeStart = zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
         // Convertir el LocalDateTime de nuevo a Timestamp
-        Timestamp startTimestamp = Timestamp.valueOf(start);
+        Timestamp startTimestamp = Timestamp.valueOf(localDateTimeStart);
         // Convertir el Timestamp a LocalDateTime
-        LocalDateTime localDateTimeEnd = endTime.toLocalDateTime().minusHours(5);
-        // Establecer la hora al inicio del día (medianoche)
-        LocalDateTime end = localDateTimeEnd.with(LocalTime.MIN).plusDays(1);
+        LocalDateTime localDateTimeEnd = zonedDateTimeEnd.toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
         // Convertir el LocalDateTime de nuevo a Timestamp
-        Timestamp endTimestamp = Timestamp.valueOf(end);
+        Timestamp endTimestamp = Timestamp.valueOf(localDateTimeEnd);
         List<Object> response = new ArrayList<Object>();
         List<String> servicios = new ArrayList<String>();
         List<Integer> cantidad = new ArrayList<Integer>();
@@ -350,9 +351,15 @@ public class VisitaVisitanteService {
         List<Object> response = new ArrayList<Object>();
         HashMap<String, Integer> serviciosCantidad = new HashMap<String, Integer>();
         List<Transaction> transactions = new ArrayList<>();
-        LocalDate timestampDateStart = start.toLocalDateTime().minusHours(5).toLocalDate();
-        LocalDate timestampDateEnd = end.toLocalDateTime().minusHours(5).toLocalDate();
-        LocalDate today = LocalDate.now();
+        Instant instantStart = start.toInstant();
+        Instant instantEnd = end.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime nowColombia = ZonedDateTime.now(zonaColombia);
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        LocalDateTime timestampDateStart = zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime timestampDateEnd = zonedDateTimeEnd.toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime today = nowColombia.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
         for (TipoServicio tipoServicio : tiposServicio) {
             visitaVisitantes.addAll(visitaVisitanteImpl.findByTipoServicioLikeAndDiaInicioBetweenOrDiaFinBetween(start, end, tipoServicio.getId()));
         }
@@ -364,11 +371,11 @@ public class VisitaVisitanteService {
                     transactions = transactionImpl.get(vistante.getVisitanteId().toString(), dateFormat.format(date), dateFormat.format(date.getTime() + unDiaEnMillis));
                     if(!transactions.isEmpty()) {
                         if ((serviciosCantidad.containsKey(vistante.getTiposervicio().getNombre()) &&
-                                ((today.isEqual(timestampDateStart) && today.isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
+                                ((today.isEqual(timestampDateStart) && today.minusDays(1).isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
                                 !today.isEqual(timestampDateStart) || !today.isEqual(timestampDateEnd)))) {
                             serviciosCantidad.put(vistante.getTiposervicio().getNombre(), serviciosCantidad.get(vistante.getTiposervicio().getNombre())+1);
                         }else {
-                            if((today.isEqual(timestampDateStart) && today.isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
+                            if((today.isEqual(timestampDateStart) && today.minusDays(1).isEqual(timestampDateEnd) && transactions.get(1).getEventPointName().contains("Entrada")) ||
                                     !today.isEqual(timestampDateStart) || !today.isEqual(timestampDateEnd)){
                                 serviciosCantidad.put(vistante.getTiposervicio().getNombre(),1);
                             }
@@ -399,11 +406,15 @@ public class VisitaVisitanteService {
         HashMap<String, Integer> cursosCantidad = new HashMap<String, Integer>();
 
         List<Transaction> transactions = new ArrayList<>();
-        System.out.println(start.toLocalDateTime().minusHours(5));
-        System.out.println(end.toLocalDateTime().minusHours(5));
-        LocalDateTime timestampDateStart = start.toLocalDateTime().minusHours(5).withHour(0).withMinute(0).withSecond(0).withNano(0);
-        LocalDateTime timestampDateEnd = end.toLocalDateTime().plusDays(1).minusHours(5).withHour(0).withMinute(0).withSecond(0).withNano(0);
-        LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        Instant instantStart = start.toInstant();
+        Instant instantEnd = end.toInstant();
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+        ZonedDateTime nowColombia = ZonedDateTime.now(zonaColombia);
+        ZonedDateTime zonedDateTimeStart = instantStart.atZone(zonaColombia);
+        ZonedDateTime zonedDateTimeEnd = instantEnd.atZone(zonaColombia);
+        LocalDateTime timestampDateStart = zonedDateTimeStart.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime timestampDateEnd = zonedDateTimeEnd.toLocalDateTime().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime today = nowColombia.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0);
 
         System.out.println(today);
         System.out.println(timestampDateStart);
