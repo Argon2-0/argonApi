@@ -41,6 +41,7 @@ public class ParticipanteService {
             }else{
                 System.out.println("-----------------");
                 System.out.println("create");
+                System.out.println(participante.toString());
                 return participanteImpl.create(participante);
             }
 
