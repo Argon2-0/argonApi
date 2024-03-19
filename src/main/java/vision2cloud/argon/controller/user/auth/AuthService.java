@@ -48,8 +48,9 @@ public class AuthService {
         ZoneId zonaColombia = ZoneId.of("America/Bogota");
         ZonedDateTime nowColombia = ZonedDateTime.now(zonaColombia);
         LocalDateTime expirationLocalDate = nowColombia.toLocalDateTime();
-        System.out.println(expirationLocalDate);
+        System.out.println("----------------------Generating-------------------");
         expirationLocalDate = expirationLocalDate.plusMinutes(TOKEN_DURATION_MINUTES );
+        System.out.println(expirationLocalDate);
         Timestamp timeExpiration = Timestamp.valueOf(expirationLocalDate);
         Date expirationDate = new Date(timeExpiration.getTime());
 

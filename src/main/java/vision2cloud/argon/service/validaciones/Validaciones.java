@@ -29,6 +29,9 @@ public class Validaciones {
         ZonedDateTime zonedDateCurrentTime = instantCurrentTime.atZone(zonaColombia);
         Timestamp newLastTime = Timestamp.valueOf(zonedDateLastTime.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
         Timestamp newCurrentTime = Timestamp.valueOf(zonedDateCurrentTime.toLocalDateTime().withHour(0).withMinute(0).withSecond(0).withNano(0));
+        System.out.println("------------------Validating--------------------");
+        System.out.println(newLastTime);
+        System.out.println(newCurrentTime);
         return authService.VerificateToken(token, newLastTime, newCurrentTime);
     }
 
