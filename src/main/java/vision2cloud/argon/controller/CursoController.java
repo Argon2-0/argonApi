@@ -104,7 +104,7 @@ public class CursoController {
         }
     }
 
-    @RequestMapping(value = "/getByNit/{nit}",method = RequestMethod.GET)
+    @RequestMapping(value = "/getByCodigo/{codigo}",method = RequestMethod.GET)
     public ResponseEntity<?> getCursoByCodigo(@PathVariable("codigo") String codigo) {
         try {
             //obtener datos que se enviarán a través del API
