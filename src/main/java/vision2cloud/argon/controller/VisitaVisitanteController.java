@@ -172,7 +172,7 @@ public class VisitaVisitanteController {
     }
 
     @RequestMapping(value = "/getByTime/{start}/{end}",method = RequestMethod.GET)
-    public ResponseEntity<?> findBetween(@PathVariable("start") Long start, @PathVariable("end") Long end, @PathVariable("codigo") String codigo) {
+    public ResponseEntity<?> findBetween(@PathVariable("start") Long start, @PathVariable("end") Long end) {
         System.out.println("aassssdasfasfafasfa");
         try {
             //obtener datos que se enviarán a través del API
@@ -196,7 +196,7 @@ public class VisitaVisitanteController {
         }
     }
 
-    @RequestMapping(value = "/findByCreatedAtBetweenAndMarca/{start}/{end}/{codigo}",method = RequestMethod.GET)
+    @RequestMapping(value = "/findByCreatedAtBetweenAndMarca/{start}/{end}/{marca}",method = RequestMethod.GET)
     public ResponseEntity<?> findByCreatedAtBetweenAndMarca(@PathVariable("start") Long start, @PathVariable("end") Long end, @PathVariable("marca") String marca) {
         System.out.println("aassssdasfasfafasfa");
         try {

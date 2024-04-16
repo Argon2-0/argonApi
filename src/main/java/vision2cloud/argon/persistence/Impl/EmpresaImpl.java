@@ -36,7 +36,7 @@ public class EmpresaImpl implements EmpresaPersistence {
     public Empresa getEmpresaByNit(String nit) {
         List<Empresa> empresas = empresaRepository.findAll();
         for (Empresa empresa: empresas){
-            if (empresa.getNit() == nit){
+            if (empresa.getNit().equals(nit)){
                 return empresa;
             }
         }
