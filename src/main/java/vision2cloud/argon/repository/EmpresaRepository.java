@@ -10,4 +10,6 @@ import java.util.List;
 @Repository("EmpresaRepository")
 public interface EmpresaRepository extends JpaRepository<Empresa,Integer> {
     List<Empresa> findByDisponibleLike(String disponible);
+
+    Empresa getEmpresaByNit(String nit);
 }

@@ -34,13 +34,7 @@ public class EmpresaImpl implements EmpresaPersistence {
 
     @Override
     public Empresa getEmpresaByNit(String nit) {
-        List<Empresa> empresas = empresaRepository.findAll();
-        for (Empresa empresa: empresas){
-            if (empresa.getNit().equals(nit)){
-                return empresa;
-            }
-        }
-        return null;
+        return empresaRepository.getEmpresaByNit(nit);
     }
 
     @Override
